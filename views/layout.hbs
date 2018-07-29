@@ -6,6 +6,9 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
 
+    <!-- jquery for popup -->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
 
@@ -13,108 +16,117 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAFmpbAhD3Bwub3kDS1HgV1FM3zGldT0&libraries=places,geometry,drawing"
         async defer></script>
 
+    <!-- Materialize icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- search map -->
+    <script type="text/javascript" src="/javascripts/searchMap.js"></script>
+
     <!-- My stylesheet -->
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/styleIndex.css' />
 
   </head>
 
   <!-- initialize the map -->
   <body onload="initAutocomplete()">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-wrapper real-navbar">
+
+        <div class="logoSection">
+          <a href="/"><img src="https://png.icons8.com/office/80/000000/globe.png"></a>
+        </div>
+
+        {{#if currentUserId}}
+
+          <a href="/logout" class="logoutBtn btn">Log out</a>
+          <!-- <button type="submit" class="modal-close waves-effect waves-green btn-flat">Log In</button> -->
+
+        {{else}}
+
+          <div class="loginSection">
+
+            <!-- Modal LOG IN-->
+            <a class="waves-effect waves-light btn modal-trigger logInBtn" href="#login">log in</a>
+            <div id="login" class="modal">
+              <div class="modal-content">
+                <h4>Log In</h4>
+                <div class="row">
+                  <form action="/login" method="post" class="col s12">
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input name="emailL" id="emailL" type="email" class="validate">
+                        <label for="emailL">Email</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input name="passwordL" id="passwordL" type="password" class="validate">
+                        <label for="passwordL">Password</label>
+                      </div>
+                    </div>
+                    <button type="submit" class="modal-close waves-effect waves-green btn-flat">Log In</button>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+
+              <!-- Modal SINGUP -->
+            <a class="waves-effect waves-light btn modal-trigger signUpBtn" href="#signup">Sign up</a>
+            <div id="signup" class="modal">
+              <div class="modal-content">
+                <h4>Sign Up</h4>
+                <div class="row">
+                  <form action="/users" method="post" class="col s12">
+                    <div class="row">
+                      <div class="input-field col s6">
+                        <input id="first_name" name="firstName" type="text" class="validate">
+                        <label for="first_name">First Name</label>
+                      </div>
+                      <div class="input-field col s6">
+                        <input id="last_name" name="lastName" type="text" class="validate">
+                        <label for="last_name">Last Name</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="email" name="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="password" name="password" type="password" class="validate">
+                        <label for="password">Password</label>
+                      </div>
+                    </div>
+                    <button class="modal-close waves-effect waves-green btn-flat" type="submit">Sign Up</button>
+
+                  </form>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button class="modal-close waves-effect waves-green btn-flat" type="submit">Sign Up</button>
+                <!-- <a href="#!" class="modal-close waves-effect waves-green btn-flat">Sign Up</a> -->
+              </div>
+            </div>
+          </div>
+
+        {{/if}}
+        </div>
+      </nav>
+
     {{{body}}}
 
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <script>
-      // This example adds a search box to a map, using the Google Place Autocomplete
-      // feature. People can enter geographical searches. The search box will return a
-      // pick list containing a mix of places and predicted search terms.
 
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+    <script type="text/javascript">
 
-      var markers = [];
-
-
-      function initAutocomplete() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: { lat: 40, lng: -30 },
-          zoom: 3,
-          mapTypeId: 'roadmap'
-        });
-
-        // Create the search box and link it to the UI element.
-        var input = document.getElementById('pac-input');
-        var searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
-        });
-
-        var markers = [];
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        searchBox.addListener('places_changed', function() {
-          var places = searchBox.getPlaces();
-
-          if (places.length == 0) {
-            return;
-          }
-
-          // Clear out the old markers.
-          markers.forEach(function(marker) {
-            marker.setMap(null);
-          });
-          markers = [];
-
-          // For each place, get the icon, name and location.
-          var bounds = new google.maps.LatLngBounds();
-          places.forEach(function(place) {
-            if (!place.geometry) {
-              console.log("Returned place contains no geometry");
-              return;
-            }
-            var icon = {
-              url: place.icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            markers.push(new google.maps.Marker({
-              map: map,
-              icon: icon,
-              title: place.name,
-              position: place.geometry.location
-            }));
-
-            if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-            } else {
-              bounds.extend(place.geometry.location);
-            }
-          });
-          map.fitBounds(bounds);
-        });
-
-        // Drawing on map
-        var drawingManager = new google.maps.drawing.DrawingManager();
-
-        drawingManager.setOptions({
-          drawingControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_CENTER,
-            drawingModes: ['marker']
-          }
-        });
-
-
-        // Displaying map
-        drawingManager.setMap(map);
-      }
+      $(document).ready(function(){
+        $('.modal').modal();
+      });
 
     </script>
 

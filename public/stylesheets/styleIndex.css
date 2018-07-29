@@ -1,0 +1,199 @@
+#map{
+  height: 91%;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.body{
+  background-image: url('/images/whiteOrangeLandscape.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+.intro{
+  display: block;
+  position: relative;
+  top: 200px;
+}
+
+.StartBtn{
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  margin:auto;
+  background-color: transparent;
+  border: 1px solid;
+  border-color: #F4C300;
+}
+
+.StartBtn:hover{
+  background-color: #F4C300;
+}
+
+.StartBtn:focus{
+  background-color: #F4C300;
+}
+
+img{
+  height: 50px;
+  margin-top: 7px;
+}
+
+.navbar{
+  height: 8.5%;
+}
+
+.logoSection .logo{
+  font-size: 3rem;
+}
+
+.logoSection{
+  margin-left: 10px;
+}
+
+.real-navbar{
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* making the background transparent https://codepen.io/sonorangirl/pen/XmRBjq */
+  background-color: transparent;
+}
+
+.logoutBtn{
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  background-color: #A49694;
+}
+
+.logoutBtn:hover{
+  background-color: #C6B5B3;
+}
+
+.logoutBtn:focus{
+  background-color: #A49694;
+}
+
+.signUpBtn{
+  margin-right: 10px;
+  background-color: #F4C300;
+}
+
+.signUpBtn:hover{
+  background-color: #ffcc00;
+}
+
+.signUpBtn:focus{
+  background-color: #F4C300;
+}
+
+#signup{
+  background-color: #F4C300;
+}
+
+.logInBtn{
+  background-color: #A49694;
+}
+
+.logInBtn:hover{
+  background-color: #C6B5B3;
+}
+
+.logInBtn:focus{
+  background-color: #A49694;
+}
+
+#login{
+  background-color: #F4C300;
+  width: 40%;
+}
+
+/* .login{
+  display: flex;
+  justify-content: flex-end;
+} */
+
+
+/* <GoogleMapsSearch> */
+
+/* #description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#infowindow-content .title {
+  font-weight: bold;
+}
+
+#infowindow-content {
+  display: none;
+}
+
+#map #infowindow-content {
+  display: inline;
+}
+
+.pac-card {
+  margin: 10px 10px 0 0;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  font-family: Roboto;
+}
+
+#pac-container {
+  padding-bottom: 12px;
+  margin-right: 12px;
+}
+
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
+
+.pac-controls label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+} */
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+  top: 10px !important;
+}
+
+#pac-input:focus {
+  /* border-color: #4d90fe; */
+  border-bottom: 1px solid;
+  border-bottom-color: #ffcc00;
+  box-shadow: 0 1px 0 0 #ffcc00;
+}
+
+/* #title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+#target {
+  width: 345px;
+} */
+
+/* </GoogleMapsSearch> */
