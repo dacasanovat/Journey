@@ -5,7 +5,6 @@
   // This example requires the Places library. Include the libraries=places
   // parameter when you first load the API. For example:
   // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
   let markerArr = [];
   let markers = [];
   let markerToDelete;
@@ -111,8 +110,13 @@
     // Add listener when the marker is drawn
     drawingManager.addListener('markercomplete', addMarkerToArray);
 
-    // add marker to array
+    // add marker to array and database
     function addMarkerToArray(marker){
+
+      // import {saveToDatabase} from '.../models/markers';
+
+      saveToDatabase(marker);
+
       markerArr.push(marker);
       // markerArr[cont].save;
 

@@ -13,6 +13,18 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+// get user first name
+router.get('/login', (req, res) => {
+  User.find({}, 'firstName', (err, users) => {
+     console.log('HOLA=====')
+    if (err) {
+      console.error(err);
+    } else {
+      res.render('index', { users });
+    }
+  });
+});
+
 // map page
 router.get('/map', (req, res) => {
   res.render('map');
@@ -20,8 +32,6 @@ router.get('/map', (req, res) => {
 
 router.post('/login', (req, res, next) => {
   User.authenticate(req.body.emailL, req.body.passwordL, (err, user) => {
-    console.log(req.body.emailL);
-    console.log(req.body.passwordL);
 
     if(err || !user) {
       const nextError = new Error('Username or password incorrect');
@@ -32,7 +42,7 @@ router.post('/login', (req, res, next) => {
 
     req.session.userId = user._id;
 
-    return res.redirect('/map');
+    return res.redirect('/');
   });
 });
 

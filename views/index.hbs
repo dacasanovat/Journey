@@ -2,8 +2,24 @@
   <div class="row">
     <div class="col s12 intro center">
 
+      {{#if currentUserId}}
+
+      <h2>Welcome {{user.firstName}}</h2>
+
+      {{else}}
+
       <h1>Build your Journey.</h1>
       <a href="/map" class="StartBtn btn">Start</a>
+
+      {{/if}}
+
+      {{#each users as |user|}}
+
+      <ul>
+        <li>{{user.firstName}}</li>
+      </ul>
+
+      {{/each}}
 
     </div>
   </div>

@@ -3,11 +3,7 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
+// save user
 router.post('/', (req, res) => {
   const user = new User(req.body);
   user.save((err) => {
