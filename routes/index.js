@@ -25,6 +25,11 @@ router.get('/login', (req, res) => {
   });
 });
 
+// calendar page
+router.get('/calendar', (req, res) => {
+  res.render('calendar');
+})
+
 // map page
 router.get('/map', (req, res) => {
   res.render('map');

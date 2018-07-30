@@ -64,6 +64,11 @@ img{
   background-color: transparent;
 }
 
+.dropdownIcon{
+  height: 30px;
+  width: 30px;
+}
+
 .logoutBtn{
   position: absolute;
   right: 10px;
