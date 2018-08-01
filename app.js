@@ -6,6 +6,8 @@ const logger = require('morgan');
 const session = require('express-session');
 
 const indexRouter = require('./routes/index');
+const markerRouter = require('./routes/marker');
+
 const usersRouter = require('./routes/users');
 
 const app = express();
@@ -23,6 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'secret-unique-code', cookie: { maxAge: 3600000 }, resave: true, saveUninitialized: true }));
 
 app.use('/', indexRouter);
+app.use('/map', markerRouter);
+
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

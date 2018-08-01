@@ -28,7 +28,7 @@
   let map;
 
 
-
+// CREATING MAP
   function initAutocomplete() {
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 40, lng: -30},
@@ -89,7 +89,7 @@
           map: map,
           icon: pinpointIconGrey,
           title: place.name,
-          position: place.geometry.location,
+          position: place.geometry.location
         });
 
         searchMarker.addListener('click', function displayInfowindowSearch(){
@@ -170,102 +170,12 @@
             path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
     };
 
+    loadMarkers();
+
   }
 
-  // ADD marker to array and database
-  function addMarkerToArray(marker){
 
-    // import {saveToDatabase} from '.../models/markers';
-
-    // saveToDatabase(marker);
-
-    // marker.addListener('mouseover', attractPolyline);
-
-    // ADD marker to the array
-    markerArr.push(marker);
-
-    // CREATE polyline between markers
-    marker.addListener('dblclick', createPolyline);
-
-
-    // SHOW infowindow
-    marker.addListener('mouseover', (position) => displayInfoMarker(position, marker));
-
-    // HIDE infowindow
-    // marker.addListener('mouseout', function hideInfoWindowMarker(){
-    //   infowindowMarker.setMap(null);
-    // });
-
-    console.log('Saved');
-    console.log(markerArr)
-
-    // Stop animation
-    setInterval(() => {
-      marker.setAnimation(null);
-    }, 490);
-
-    let infoMarker = '<button onclick="deleteMarker()" type="button" name="button"><i class="material-icons">delete</i></button>';
-
-    // CREATE infowindow
-    infowindowMarker = new google.maps.InfoWindow({
-      content: infoMarker
-    });
-
-
-    function displayInfoMarker(position, marker){
-      infowindowMarker.open(map, marker);
-      markerToDelete = marker;
-      i = markerArr.indexOf(marker);
-    }
-  }
-
-  function createPolyline(position){
-    count++;
-    if(count == 2){
-      console.log('drawing line')
-      let polyline = new google.maps.Polyline({
-        path: [positionOne.latLng, position.latLng],
-        map: map,
-        strokeWeight: 2,
-        geodesic: true,
-        icons: [{
-          icon: lineSymbol,
-          offset: '50%',
-          // repeat: '30%'
-        }]
-      });
-      count = 0;
-      // ADD polyline to array
-      polylineArr.push(polyline);
-      console.log(polylineArr);
-
-      // SHOW infowindow
-      polyline.addListener('mouseover', (position) => displayInfoPolyline(position, polyline));
-
-      // HIDE infowindow
-      polyline.addListener('mouseout', function hideInfoWindowPolyline(){
-        infowindowPolyline.setMap(null);
-      });
-    }
-    else{
-      console.log('saving position one');
-      positionOne = position;
-    }
-
-    let infoPolyline = '<button onclick="deletePolyline()" type="button" name="button"><i class="material-icons">delete</i></button>';
-
-    infowindowPolyline = new google.maps.InfoWindow({
-      content: infoPolyline
-    })
-
-    function displayInfoPolyline(position, polyline){
-      infowindowPolyline.setPosition(position.latLng);
-      infowindowPolyline.open(map);
-      polylineToDelete = polyline;
-      i = polylineArr.indexOf(polyline);
-    }
-  }
-
+  // ADD searchmarker to array and map
   function addToMap(){
 
     drawingMarker = new google.maps.Marker({
@@ -282,19 +192,4 @@
 
     infowindowSearch.setMap(null);
     infowindowMarker.open(map, drawingMarker);
-  }
-
-
-  function deletePolyline(){
-    polylineToDelete.setMap(null);
-    polylineArr.splice(i, 1);
-    console.log(polylineArr);
-    infowindowPolyline.setMap(null);
-  }
-
-  function deleteMarker(){
-    markerToDelete.setMap(null);
-    markerArr.splice(i, 1);
-    console.log(markerArr);
-
   }

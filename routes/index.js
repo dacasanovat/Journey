@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
-
+const Marker = require('../models/markers');
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -9,14 +9,13 @@ router.use((req, res, next) => {
 });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('index');
 });
 
 // get user first name
 router.get('/login', (req, res) => {
   User.find({}, 'firstName', (err, users) => {
-     console.log('HOLA=====')
     if (err) {
       console.error(err);
     } else {
@@ -30,11 +29,6 @@ router.get('/calendar', (req, res) => {
   res.render('calendar');
 })
 
-// map page
-router.get('/map', (req, res) => {
-  res.render('map');
-});
-
 router.post('/login', (req, res, next) => {
   User.authenticate(req.body.emailL, req.body.passwordL, (err, user) => {
 
@@ -45,20 +39,44 @@ router.post('/login', (req, res, next) => {
       return next(nextError);
     }
 
+    console.log('saved the user id')
     req.session.userId = user._id;
+
+    console.log(req.session.userId);
 
     return res.redirect('/');
   });
 });
 
+// IT DOESENT RETURN A PROMISE?
+// router.get('/logout', (req, res, next) => {
+//     req.session.destroy().then(() => {
+//       return res.redirect('/');
+//
+//     }).catch((err) => {
+//       console.log(err.message);
+//       return next(err);
+//     });
+// });
+
 router.get('/logout', (req, res, next) => {
-  if(req.session){
+  if (req.session) {
     req.session.destroy((err) => {
-      if(err) return next(err);
+      if (err) return next(err);
       return next();
     });
   }
+
   return res.redirect('/');
 });
+
+// router.get('/logout', (req, res, next) => {
+//   if(req.session){
+//     req.session.destroy((err) => {
+//       if(err) return next(err);
+//     });
+//   }
+//   return res.redirect('/');
+// });
 
 module.exports = router;
