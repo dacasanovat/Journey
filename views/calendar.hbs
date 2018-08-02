@@ -1,6 +1,33 @@
 
 <link rel="stylesheet" href="./calendarJs/style.css">
 
+{{#if currentUserId}}
+
+  <nav class="navbar">
+    <div class="nav-wrapper real-navbar">
+
+      <div class="logoSection">
+        <a href="/"><img src="https://png.icons8.com/office/80/000000/globe.png"></a>
+      </div>
+
+      <ul>
+        <li>
+          <a href="/logout" class="logoutBtn btn">Log out</a>
+        </li>
+        <li>
+          <ul id="dropdown3" class="dropdown-content">
+              <li><a href="/map">Map</a></li>
+              <li><a href="/calendar">Calendar</a></li>
+          </ul>
+          <a class="btn dropdown-trigger" href="#!" data-target="dropdown3"><i class="material-icons dropdownIcon">view_module</i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+{{/if}}
+
+
 <div id="calendarThis">
 
 </div>

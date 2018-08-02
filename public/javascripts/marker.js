@@ -1,10 +1,12 @@
 // ADD marker to array
 function addMarkerToArray(marker){
 
+  console.log(polylineArr[0].getPath(0).lat);
+
   // ADD marker to the array
   markerArr.push(marker);
 
-  addProperties(marker);
+  addPropertiesMarkers(marker);
 
   console.log('Saved');
   console.log(markerArr)
@@ -85,7 +87,7 @@ function saveMarkers(){
   }
 
   if(markerArr.length > 0){
-    let markerArrStr = markerArr.map((marker) => {
+    const markerArrStr = markerArr.map((marker) => {
       return {
         lat: marker.getPosition().lat(),
         lng: marker.getPosition().lng()

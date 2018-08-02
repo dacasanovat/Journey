@@ -61,20 +61,20 @@ function savePolyline(){
     }
   });
 
-  const url = '/polyline';
+  const url = '/polyline'
   const options = {
     method: 'POST',
     credentials: 'include',
     headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
     body: JSON.stringify(polylineArrStr)
-  };
-
+  }
   fetch(url, options);
 }
 
 // LOADING polylines from database on login
 function loadPolylines(){
   fetch('/polyline/load', { credentials: 'include' }).then((res) => {
+    console.log('We are fetching the polylines front end')
     return res.json();
   }).then((polylines) => {
     console.log(polylines);
@@ -84,8 +84,9 @@ function loadPolylines(){
   })
 }
 
-function addPolyline(polyline){
-  polyline.forEach((polyline) => {
+function addPolyline(polylines){
+  polylines.forEach((polyline) => {
+    console.log('we are creating each polyline');
     polyline = new google.maps.Polyline({
       path: [google.maps.LatLng(polyline.positionOne.lat, polyline.positionOne.lng), google.maps.LatLng(polyline.positionTwo.lat, polyline.positionTwo.lng)],
       map: map,
@@ -99,7 +100,7 @@ function addPolyline(polyline){
     });
 
     addPropertiesPolylines(polyline);
-    
+
   });
 }
 

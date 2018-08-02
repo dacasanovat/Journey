@@ -1,18 +1,17 @@
 const mongoose = require('mongoose');
 const express = require('express');
-const Marker = require('../models/markers');
-const User = require('../models/user');
 const Polyline = require('../models/polylines');
-
 
 const router = express.Router();
 
 // SAVE polylines to database
 router.post('/', (req, res) => {
-  if(req.session.userId = undefined){
+  if(req.session.userId == undefined){
     console.log('Login to save your polylines');
+    console.log(req.session.userId);
   } else {
-    console.log('------------------');
+    console.log('--------Polylines----------');
+    console.log(req.session.userId);
 
     let polylineArrStr = req.body;
 
@@ -48,16 +47,19 @@ router.post('/', (req, res) => {
   }
 });
 
-router.get('/load', (req, res, next) {
+router.get('/load', (req, res, next) => {
   Polyline.find({ id: req.session.userId }).exec((err, polylines) => {
+    console.log('we are in the back end load');
     if(err){
       return next(err);
-    }else if(!polylines){
+    } else if(!polylines){
       const err =  new Error('No polylines were found.');
       err.status = 404;
       return next(err);
     }
-
+    console.log(polylines);
     return res.json(polylines);
   });
 });
+
+module.exports = router;

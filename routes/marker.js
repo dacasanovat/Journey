@@ -16,7 +16,8 @@ router.post('/', (req, res) => {
   if(req.session.userId == undefined){
     console.log('Log in to save your markers');
   }else{
-    console.log('--------------------');
+    console.log('---------Markers----------');
+    console.log(req.session.userId);
 
     let markerArrStr = req.body;
 
