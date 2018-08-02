@@ -18,7 +18,7 @@ function addMarkerToArray(marker){
 
 
 // ADD properties to each marker
-function addProperties(marker){
+function addPropertiesMarkers(marker){
 
   // create polyline between markers
   marker.addListener('dblclick', createPolyline);
@@ -41,7 +41,7 @@ function deleteMarker(){
 
 }
 
-// LOAD markers on login
+// LOAD markers from database on login
 function loadMarkers(){
 
   // get user id from session, take it and make a request to the backend get only markers asociated with that user.
@@ -60,7 +60,7 @@ function loadMarkers(){
 
 // ADD markers from database to map
 function addMarkers(markers){
-  markers.forEach(function(marker){
+  markers.forEach((marker) => {
     let lat = marker.latitude;
     let lng = marker.longitude;
 
@@ -73,13 +73,18 @@ function addMarkers(markers){
       icon: pinpointIcon
     });
 
-    addProperties(marker);
+    addPropertiesMarkers(marker);
 
   });
 }
 
 // FETCHING markers positions
 function saveMarkers(){
+  if(polylineArr.length > 0){
+    savePolyline();
+  }
+
+  if(markerArr.length > 0){
     let markerArrStr = markerArr.map((marker) => {
       return {
         lat: marker.getPosition().lat(),
@@ -94,4 +99,5 @@ function saveMarkers(){
       body: JSON.stringify(markerArrStr)
     }
     fetch(url, options);
+  }
 }

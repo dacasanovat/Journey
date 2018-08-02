@@ -7,7 +7,7 @@ const session = require('express-session');
 
 const indexRouter = require('./routes/index');
 const markerRouter = require('./routes/marker');
-
+// const polylineRouter = require('./routes/polyline');
 const usersRouter = require('./routes/users');
 
 const app = express();
@@ -26,8 +26,9 @@ app.use(session({ secret: 'secret-unique-code', cookie: { maxAge: 3600000 }, res
 
 app.use('/', indexRouter);
 app.use('/map', markerRouter);
-
+// app.use('/polyline', polylineRouter);
 app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

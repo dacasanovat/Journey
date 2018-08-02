@@ -53,7 +53,7 @@ router.get('/load', (req, res, next) => {
     if(err){
       return next(err);
     } else if(!markers) {
-      var err = new Error('Marker not found.');
+      const err = new Error('No markers where found.');
       err.status = 404;
       return next(err);
     }
