@@ -22,13 +22,12 @@ html, body {
 }
 
 .StartBtn{
-  width: 100px;
-  height: 40px;
   text-align: center;
-  margin:auto;
+  margin: auto;
   background-color: transparent;
   border: 1px solid;
   border-color: #F4C300;
+  display: inline-block;
 }
 
 .StartBtn:hover{
@@ -70,9 +69,6 @@ img{
 }
 
 .logoutBtn{
-  position: absolute;
-  right: 10px;
-  top: 15px;
   background-color: #A49694;
 }
 

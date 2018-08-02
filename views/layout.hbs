@@ -22,11 +22,9 @@
     <!-- search map -->
     <script type="text/javascript" src="/javascripts/searchMap.js"></script>
     <script type="text/javascript" src="/javascripts/marker.js"></script>
-    <script type="text/javascript" src="/javascripts/polyline.js">
-
-    </script>
+    <script type="text/javascript" src="/javascripts/polyline.js"></script>
     <!-- My stylesheet -->
-    <link rel='stylesheet' href='/stylesheets/styleIndex.css' />
+    <link rel='stylesheet' href='/stylesheets/styleIndex.css'>
     <link rel="stylesheet" href='/stylesheets/styleMap.css'>
 
 
@@ -38,6 +36,10 @@
     <!-- <div class="">
 
     </div> -->
+    {{#if currentUserId}}
+
+
+    {{else}}
 
     <!-- Navbar -->
     <nav class="navbar">
@@ -47,14 +49,8 @@
           <a href="/"><img src="https://png.icons8.com/office/80/000000/globe.png"></a>
         </div>
 
-        {{#if currentUserId}}
 
-          <a href="/logout" class="logoutBtn btn">Log out</a>
-          <!-- <button type="submit" class="modal-close waves-effect waves-green btn-flat">Log In</button> -->
-
-        {{else}}
           <ul>
-            <div class="loginSection">
               <!-- Modal LOG IN-->
               <li>
                 <a class="waves-effect waves-light btn modal-trigger logInBtn" href="#login">log in</a>
@@ -118,6 +114,7 @@
                     </div>
                   </div>
                 </div>
+              </li>
               <li>
                   <ul id="dropdown2" class="dropdown-content">
                       <li><a href="/map">Map</a></li>
@@ -125,7 +122,6 @@
                   </ul>
                     <a class="btn dropdown-trigger" href="#!" data-target="dropdown2"><i class="material-icons dropdownIcon">view_module</i></a>
               </li>
-            </div>
           </ul>
         {{/if}}
       </div>

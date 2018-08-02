@@ -1,3 +1,16 @@
 .infoSearchIcon{
   color: red;
 }
+
+.saveBtn{
+  margin: 0 15px;
+  background-color: #F4C300;
+}
+
+.saveBtn:hover{
+  background-color: #ffcc00;
+}
+
+.saveBtn:focus{
+  background-color: #F4C300;
+}

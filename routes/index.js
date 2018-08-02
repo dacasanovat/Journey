@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.use((req, res, next) => {
   res.locals.currentUserId = req.session.userId;
+  res.locals.currentName = req.session.firstName;
   next();
 });
 
@@ -41,6 +42,8 @@ router.post('/login', (req, res, next) => {
 
     console.log('saved the user id')
     req.session.userId = user._id;
+    req.session.firstName = user.firstName;
+    console.log(user.firstName);
 
     console.log(req.session.userId);
 

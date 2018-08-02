@@ -1,26 +1,47 @@
-<body class="body">
-  <div class="row">
-    <div class="col s12 intro center">
+{{#if currentUserId}}
+  <nav class="navbar">
+    <div class="nav-wrapper real-navbar">
 
-      {{#if currentUserId}}
-
-      <h2>Welcome {{user.firstName}}</h2>
-
-      {{else}}
-
-      <h1>Build your Journey.</h1>
-      <a href="/map" class="StartBtn btn">Start</a>
-
-      {{/if}}
-
-      {{#each users as |user|}}
+      <div class="logoSection">
+        <a href="/"><img src="https://png.icons8.com/office/80/000000/globe.png"></a>
+      </div>
 
       <ul>
-        <li>{{user.firstName}}</li>
+        <li>
+          <a href="/logout" class="logoutBtn btn">Log out</a>
+        </li>
+        <li>
+          <ul id="dropdown3" class="dropdown-content">
+              <li><a href="/map">Map</a></li>
+              <li><a href="/calendar">Calendar</a></li>
+          </ul>
+          <a class="btn dropdown-trigger" href="#!" data-target="dropdown3"><i class="material-icons dropdownIcon">view_module</i></a>
+        </li>
       </ul>
-
-      {{/each}}
-
     </div>
-  </div>
-</body>
+  </nav>
+
+  <body class="body">
+    <div class="row">
+      <div class="col s12 intro center">
+
+        <h2>Welcome {{currentName}}</h2>
+        <a href="/map" class="StartBtn btn">Shall we?</a>
+        
+      </div>
+    </div>
+  </body>
+
+{{else}}
+
+  <body class="body">
+    <div class="row">
+      <div class="col s12 intro center">
+
+        <h1>Build your Journey.</h1>
+        <a href="/map" class="StartBtn btn">Start</a>
+
+      </div>
+    </div>
+  </body>
+{{/if}}

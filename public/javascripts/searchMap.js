@@ -39,6 +39,7 @@
 
     map.addListener('click', function hideAllInfowindows(){
       infowindowMarker.setMap(null);
+      infowindowPolyline.setMap(null);
       infowindowSearch.setMap(null);
     });
 
@@ -92,7 +93,7 @@
           position: place.geometry.location
         });
 
-        searchMarker.addListener('click', function displayInfowindowSearch(){
+        searchMarker.addListener('mouseover', function displayInfowindowSearch(){
           infowindowSearch.open(map, searchMarker);
         })
 
@@ -169,6 +170,19 @@
     lineSymbol = {
             path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
     };
+
+    // CREATE marker infowindow
+    let infoMarker = '<button onclick="deleteMarker()" type="button" name="button"><i class="material-icons">delete</i></button>';
+
+    infowindowMarker = new google.maps.InfoWindow({
+      content: infoMarker
+    });
+
+    let infoPolyline = '<button onclick="deletePolyline()" type="button" name="button"><i class="material-icons">delete</i></button>';
+
+    infowindowPolyline = new google.maps.InfoWindow({
+      content: infoPolyline
+    })
 
     loadMarkers();
 

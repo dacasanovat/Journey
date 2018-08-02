@@ -5,49 +5,49 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-// let userId;
-
 // map page
 router.get('/', (req, res) => {
   res.render('map');
-  // userId = req.session.userId;
 });
 
+// SAVE markers to database
 router.post('/', (req, res) => {
-  // console.log(req.query.long);
-  // console.log(req.query.lat);
-  console.log('--------------------');
 
-  let markerArrStr = req.body;
-  // let markerArrStr = JSON.parse(req.body);
+  if(req.session.userId == undefined){
+    console.log('Log in to save your markers');
+  }else{
+    console.log('--------------------');
 
-  JSON.parse(markerArrStr);
+    let markerArrStr = req.body;
 
-  console.log(markerArrStr.markers);
+    const markerArrStrNew = markerArrStr.map(marker => {
+      const newMarker = new Marker({
+        latitude: marker.lat,
+        longitude: marker.lng,
+        id: req.session.userId
+      });
+      return new Promise((resolve, reject) => {
+        newMarker.save((error, result) => {
+          if (error) {
+            reject(error)
+          }
+          resolve(result);
+        })
+      })
+    });
 
-
-
-
-  // JSON.parse(markerArrStr);
-
-  const marker = new Marker({
-    longitude: req.query.long,
-    latitude: req.query.lat,
-    id: req.session.userId,
-  });
-
-  marker.save()
-
-  // .then((next) => {
-  //   return next();
-  // })
-
-  // .catch((err) => {
-  //   console.log(err.message);
-  //   return next();
-  // })
+    Promise.all(markerArrStrNew).then((results) => {
+      console.log(results);
+      console.log('All markers saved');
+    }, (error) => {
+      console.log(error);
+      console.log('We fucked up')
+    })
+  }
 });
 
+
+// LOAD markers from database with specific id
 router.get('/load', (req, res, next) => {
   Marker.find({ id: req.session.userId }).exec((err, markers) => {
     if(err){

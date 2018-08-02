@@ -14,13 +14,6 @@ function addMarkerToArray(marker){
     marker.setAnimation(null);
   }, 490);
 
-  // CREATE infowindow
-  let infoMarker = '<button onclick="deleteMarker()" type="button" name="button"><i class="material-icons">delete</i></button>';
-
-  infowindowMarker = new google.maps.InfoWindow({
-    content: infoMarker
-  });
-
 }
 
 
@@ -80,40 +73,25 @@ function addMarkers(markers){
       icon: pinpointIcon
     });
 
+    addProperties(marker);
+
   });
 }
 
 // FETCHING markers positions
-  function saveMarkers(){
-
+function saveMarkers(){
     let markerArrStr = markerArr.map((marker) => {
       return {
         lat: marker.getPosition().lat(),
         lng: marker.getPosition().lng()
       }
     });
-
-    let bodyData = {
-      markers: markerArrStr
-    }
-
-    // console.log(bodyData);
-
-    // markerArrStr = JSON.stringify(bodyData);
-
     const url = '/map'
-    const options = { method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(bodyData) }
-
+    const options = {
+      method: 'POST',
+      credentials: 'include',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify(markerArrStr)
+    }
     fetch(url, options);
-
-
-    // markerArr.forEach((marker) => {
-    //   const url = `/map?lat=${marker.getPosition().lat()}&long=${marker.getPosition().lng()}`
-    //   const options = { method: 'POST', credentials: 'include' }
-    //
-    //   console.log('--------------------');
-    //   console.log(marker);
-    //   console.log('--------------------');
-    //   fetch(url, options);
-    // })
-  }
+}
