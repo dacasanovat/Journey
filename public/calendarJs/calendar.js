@@ -52,26 +52,65 @@ document.addEventListener("DOMContentLoaded", function(event){
 						`
 						<div class="day-header">Monday</div>
 						<div class="row">
-							<form class="col s12">
+							<form id="activityForm" class="col s12">
 								<div class="row">
 									<div class="input-field col s12">
-										<textarea id="textarea1" class="materialize-textarea"></textarea>
-										<label for="textarea1">Activity</label>
+										<input id="activityInput" type="text">
+										<input type="submit">
+										<label for="activityInput">Activity</label>
 									</div>
 								</div>
 							</form>
 						</div>
+
+						<ul id="activityLog">
+
+						</ul>
 						`;
 
 				// ADDING html to <div id='dayView'>
 				$('#dayView').html(formString);
 
+
+				$( function() {
+	        $( "#activityLog" ).sortable();
+	        $( "#activityLog" ).disableSelection();
+	      } );
+
+	      const activityList = [];
+
+	      $("#activityForm").submit(function(e){
+					console.log('We are in the input field')
+	        e.preventDefault();
+	        const activity = $('#activityInput').val();
+	        activityList.push(activity);
+	        displayAct();
+	        $('#activityInput').val('');
+	      });
+
+	      function displayAct(){
+					console.log(activityList);
+					console.log('We are displaying the list')
+	        let str = '';
+	        activityList.forEach((act) => {
+	          str += `<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>${act}</li>`;
+	        })
+	        $('#activityLog').html(str);
+	      }
+
+
+
+
+
+
+
+
 				// 21st, dayNumber
-				addElem("time", "day-number", dayView);
-				var dayNumber = document.querySelector('.day-number');
-				var dayNumNode = document.createTextNode(currentDate.theDay);
-				dayNumber.appendChild(dayNumNode);
-				dayView.appendChild(dayNumber);
+				// addElem("time", "day-number", dayView);
+				// var dayNumber = document.querySelector('.day-number');
+				// var dayNumNode = document.createTextNode(currentDate.theDay);
+				// dayNumber.appendChild(dayNumNode);
+				// dayView.appendChild(dayNumber);
 
 				addElem("div", "month-view", renderTarget);
 				var monthView = document.querySelector('.month-view');
