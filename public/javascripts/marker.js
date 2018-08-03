@@ -1,8 +1,6 @@
 // ADD marker to array
 function addMarkerToArray(marker){
 
-  console.log(polylineArr[0].getPath(0).lat);
-
   // ADD marker to the array
   markerArr.push(marker);
 
