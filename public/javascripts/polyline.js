@@ -87,8 +87,12 @@ function loadPolylines(){
 function addPolyline(polylines){
   polylines.forEach((polyline) => {
     console.log('we are creating each polyline');
+    // console.log(polyline.positionOne.lat)
+    let LatLngOne = new google.maps.LatLng({ lat: polyline.positionOne.lat, lng: polyline.positionOne.lng });
+    let LatLngTwo = new google.maps.LatLng({ lat: polyline.positionTwo.lat, lng: polyline.positionTwo.lng });
+
     polyline = new google.maps.Polyline({
-      path: [google.maps.LatLng(polyline.positionOne.lat, polyline.positionOne.lng), google.maps.LatLng(polyline.positionTwo.lat, polyline.positionTwo.lng)],
+      path: [ LatLngOne, LatLngTwo ],
       map: map,
       strokeWeight: 2,
       geodesic: true,
