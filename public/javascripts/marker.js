@@ -49,7 +49,9 @@ function loadMarkers(){
     return res.json()
 
   }).then((markers) => {
+    console.log('------markers that loaded-------')
     console.log(markers);
+    console.log('--------------------------------')
     addMarkers(markers);
 
   }).catch((err) => {
@@ -63,9 +65,6 @@ function addMarkers(markers){
   markers.forEach((marker) => {
     let lat = marker.latitude;
     let lng = marker.longitude;
-
-    console.log(lat);
-    console.log(lng);
 
     marker = new google.maps.Marker({
       map: map,

@@ -114,6 +114,16 @@ img{
   width: 40%;
 }
 
+h1{
+color: #DDD;
+text-shadow: 1px 1px black;
+}
+
+h2{
+color: #DDD;
+text-shadow: 1px 1px black;
+}
+
 /* .login{
   display: flex;
   justify-content: flex-end;

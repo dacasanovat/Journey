@@ -1,3 +1,5 @@
+let polylineArrFromDatabase;
+
 // CREATE POLYLINE
 function createPolyline(position){
   count++;
@@ -29,19 +31,18 @@ function createPolyline(position){
     console.log('saving position one');
     positionOne = position;
   }
-
-  console.log(polylineArr[0].getPath().getAt(0).lat())
-
-
-  function displayInfoPolyline(position, polyline){
-    infowindowPolyline.setPosition(position.latLng);
-    infowindowPolyline.open(map);
-    polylineToDelete = polyline;
-    i = polylineArr.indexOf(polyline);
-  }
 }
 
-function addPropertiesPolylines(){
+function displayInfoPolyline(position, polyline){
+  infowindowPolyline.setPosition(position.latLng);
+  infowindowPolyline.open(map);
+  polylineToDelete = polyline;
+  i = polylineArr.indexOf(polyline);
+}
+
+function addPropertiesPolylines(polyline){
+  console.log('We are adding the properties to the polylines')
+  console.log(polyline);
   // SHOW infowindow
   polyline.addListener('click', (position) => displayInfoPolyline(position, polyline));
 }
@@ -74,12 +75,13 @@ function savePolyline(){
 // LOADING polylines from database on login
 function loadPolylines(){
   fetch('/polyline/load', { credentials: 'include' }).then((res) => {
-    console.log('We are fetching the polylines front end')
     return res.json();
   }).then((polylines) => {
-    console.log(polylines);
-    console.log('we are sending the array of polylines')
-    addPolyline(polylines);
+    polylineArrFromDatabase = polylines;
+    console.log('----polylines that loaded-------')
+    console.log(polylineArrFromDatabase);
+    console.log('--------------------------------')
+    addPolyline(polylineArrFromDatabase);
   }).catch((err) => {
     console.log(err.message);
   })
@@ -87,9 +89,9 @@ function loadPolylines(){
 
 function addPolyline(polylines){
   polylines.forEach((polyline) => {
-    console.log('we are creating each polyline');
-    console.log(polylines);
-    console.log(polyline.positionOne.lat)
+    console.log('Creating each polyline');
+    console.log('displaying polylines[0]');
+    console.log(polyline);
     let LatLngOne = new google.maps.LatLng({ lat: polyline.positionOne.lat, lng: polyline.positionOne.lng });
     let LatLngTwo = new google.maps.LatLng({ lat: polyline.positionTwo.lat, lng: polyline.positionTwo.lng });
 
@@ -105,7 +107,8 @@ function addPolyline(polylines){
       }]
     });
 
-    addPropertiesPolylines(polyline);
+    console.log(polyline);
+    addPropertiesPolylines(newPolyline);
 
   });
 }
