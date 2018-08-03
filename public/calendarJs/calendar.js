@@ -146,6 +146,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 						} else if (currentDate.firstDayOfMonth == "Saturday"){
 							dayOne.style.marginLeft = "304px";
 						}
+					// } else {
 					} else if(window.innerWidth >= 1396){
 						console.log('screen size big')
 
@@ -163,7 +164,10 @@ document.addEventListener("DOMContentLoaded", function(event){
 						} else if (currentDate.firstDayOfMonth == "Saturday"){
 							dayOne.style.marginLeft = "546px";
 						}
+					// }
 					} else if(window.innerWidth < 1396 && window.innerWidth > 767){
+						console.log('screen size medium');
+
 						var dayOne = document.getElementById('day_1');
 						if (currentDate.firstDayOfMonth == "Monday"){
 							dayOne.style.marginLeft = "51px";

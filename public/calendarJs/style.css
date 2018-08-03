@@ -135,12 +135,14 @@ hr{
   }
   #calendarThis{
       width: 358px;
-      /* height: 95%; */
   }
 }
 
 /* FOR MEDIUM SCREEN */
-@media (max-width: 1396px) {
+@media (max-width: 1396px) and (min-width: 768px) {
+  #calendarThis{
+      width: 726px;
+¡  }
   #calendarThis li, .day-of-week{
       padding: 10px 8px;
   }
