@@ -1,4 +1,3 @@
-let polylineArrFromDatabase;
 
 // CREATE POLYLINE
 function createPolyline(position){
@@ -18,6 +17,7 @@ function createPolyline(position){
     });
 
     count = 0;
+    console.log('Saved')
     // ADD polyline to array
     polylineArr.push(polyline);
     console.log(polylineArr);
@@ -26,6 +26,7 @@ function createPolyline(position){
     // polyline.addListener('mouseout', function hideInfoWindowPolyline(){
     //   infowindowPolyline.setMap(null);
     // });
+    addPropertiesPolylines(polyline);
   }
   else{
     console.log('saving position one');
@@ -42,7 +43,6 @@ function displayInfoPolyline(position, polyline){
 
 function addPropertiesPolylines(polyline){
   console.log('We are adding the properties to the polylines')
-  console.log(polyline);
   // SHOW infowindow
   polyline.addListener('click', (position) => displayInfoPolyline(position, polyline));
 }
@@ -77,11 +77,10 @@ function loadPolylines(){
   fetch('/polyline/load', { credentials: 'include' }).then((res) => {
     return res.json();
   }).then((polylines) => {
-    polylineArrFromDatabase = polylines;
     console.log('----polylines that loaded-------')
-    console.log(polylineArrFromDatabase);
+    console.log(polylines);
     console.log('--------------------------------')
-    addPolyline(polylineArrFromDatabase);
+    addPolyline(polylines);
   }).catch((err) => {
     console.log(err.message);
   })
@@ -90,8 +89,6 @@ function loadPolylines(){
 function addPolyline(polylines){
   polylines.forEach((polyline) => {
     console.log('Creating each polyline');
-    console.log('displaying polylines[0]');
-    console.log(polyline);
     let LatLngOne = new google.maps.LatLng({ lat: polyline.positionOne.lat, lng: polyline.positionOne.lng });
     let LatLngTwo = new google.maps.LatLng({ lat: polyline.positionTwo.lat, lng: polyline.positionTwo.lng });
 
@@ -107,7 +104,6 @@ function addPolyline(polylines){
       }]
     });
 
-    console.log(polyline);
     addPropertiesPolylines(newPolyline);
 
   });
