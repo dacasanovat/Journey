@@ -39,12 +39,33 @@ document.addEventListener("DOMContentLoaded", function(event){
 
 				// Monday, dayView
 				addElem("div", "day-view", renderTarget);
-				var dayView = document.querySelector('.day-view');
-				var dayNameElem = document.createElement("div"); // i.e.: Wednesday
+				const dayView = document.querySelector('.day-view');
+				const dayNameElem = document.createElement("div"); // i.e.: Wednesday
+				dayView.setAttribute('id', 'dayView');
 				dayNameElem.className = "day-header";
-				var dayNameNode = document.createTextNode(currentDate.dayName);
+				const dayNameNode = document.createTextNode(currentDate.dayName);
 				dayNameElem.appendChild(dayNameNode);
 				dayView.appendChild(dayNameElem);
+
+				const formString =
+
+						`
+						<div class="day-header">Monday</div>
+						<div class="row">
+							<form class="col s12">
+								<div class="row">
+									<div class="input-field col s12">
+										<textarea id="textarea1" class="materialize-textarea"></textarea>
+										<label for="textarea1">Activity</label>
+									</div>
+								</div>
+							</form>
+						</div>
+						`;
+
+				// ADDING html to <div id='dayView'>
+				$('#dayView').html(formString);
+
 				// 21st, dayNumber
 				addElem("time", "day-number", dayView);
 				var dayNumber = document.querySelector('.day-number');
