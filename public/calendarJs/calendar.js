@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 								<div class="row">
 									<div class="input-field col s12">
 										<input id="activityInput" type="text">
-										<input type="submit">
+										<input type="submit" style='display: none'>
 										<label for="activityInput">Activity</label>
 									</div>
 								</div>
@@ -64,7 +64,9 @@ document.addEventListener("DOMContentLoaded", function(event){
 						</div>
 
 						<ul id="activityLog">
-
+							<li class="test ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Go to the park</li>
+							<li class="test ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Visit the museum</li>
+							<li class="test ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Go biking</li>
 						</ul>
 						`;
 
