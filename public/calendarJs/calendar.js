@@ -1,3 +1,4 @@
+
 /* Vanilla JS Calendar */
 (function vanillaJsCalendar(){
 
@@ -8,9 +9,9 @@ var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
 
 document.addEventListener("DOMContentLoaded", function(event){
 
-		var theDate = new Date();
+		let theDate = new Date();
 
-		var DateObject = function DateObject(theDate) {
+		let DateObject = function DateObject(theDate) {
 				this.theDay = theDate.getDate();
 				this.dayName = dayNames[theDate.getDay()];
 				this.theMonth = monthNames[theDate.getMonth()];
@@ -22,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function(event){
 		var currentDate = new DateObject(theDate);
 
 		function renderCalendar(targetElem){
-
 				// Custom function to make new elements easier:
 				function addElem(elementType, elemClass, appendTarget){
 					appendTarget.innerHTML += "<"+elementType+" class="+elemClass+"> </"+elementType+">";
@@ -48,41 +48,61 @@ document.addEventListener("DOMContentLoaded", function(event){
 				dayView.appendChild(dayNameElem);
 
 				const formString =
-
 						`
-						<div class="day-header">Monday</div>
+						<div class="row headerDaySection">
+						  <div class="day-header col s10">Monday</div>
+						  <div class="day-header todaySection col s2"><a href="#" id="goToday"><img class="imagenToday" src="/images/today.png" alt="today"><a/></div>
+						</div
 						<div class="row">
 							<form id="activityForm" class="col s12">
 								<div class="row">
 									<div class="input-field col s12">
 										<input id="activityInput" type="text">
-										<input type="submit" style='display: none'>
+										<input type="submit" style="display:none">
 										<label for="activityInput">Activity</label>
 									</div>
 								</div>
 							</form>
 						</div>
 
-						<ul id="activityLog">
-							<li class="test ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Go to the park</li>
-							<li class="test ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Visit the museum</li>
-							<li class="test ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Go biking</li>
+						<ul class="collection" id="activityLog">
+
 						</ul>
 						`;
 
 				// ADDING html to <div id='dayView'>
 				$('#dayView').html(formString);
 
+				// when everything on the page finished loading
+				$(function() {
+					// all code here
 
-				$( function() {
+					$('body').on('click', '#goToday', function(e) {
+						e.preventDefault();
+						theDate = new Date();
+						theDate.setMonth(theDate.getMonth() - 1);
+						currentDate = new DateObject(theDate);
+						goToMonth(currentDate, true);
+					});
+
+					$('body').on('click', '#dayList > li', function(e) {
+						e.preventDefault();
+						const listTag = document.getElementById('dayList').getElementsByTagName('li');
+
+						console.log('Click one of those list items ');
+						for (let i = 0; i < listTag.length; i++) {
+							listTag[i].classList.remove('today');
+						}
+						e.target.classList.add('today');
+					});
+
 	        $( "#activityLog" ).sortable();
 	        $( "#activityLog" ).disableSelection();
-	      } );
+	      });
 
 	      const activityList = [];
 
-	      $("#activityForm").submit(function(e){
-					console.log('We are in the input field')
+	      $('body').on('submit', '#activityForm', function(e){
 	        e.preventDefault();
 	        const activity = $('#activityInput').val();
 	        activityList.push(activity);
@@ -91,19 +111,12 @@ document.addEventListener("DOMContentLoaded", function(event){
 	      });
 
 	      function displayAct(){
-					console.log(activityList);
-					console.log('We are displaying the list')
 	        let str = '';
 	        activityList.forEach((act) => {
-	          str += `<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>${act}</li>`;
+	          str += `<li class="collection-item">${act}</li>`;
 	        })
 	        $('#activityLog').html(str);
 	      }
-
-
-
-
-
 
 
 
@@ -142,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 							goToMonth(currentDate, true);
 							break;
 					}
+
 				};
 
 				var monthSpan = document.createElement("SPAN");
@@ -168,6 +182,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 				for(i = 0; i < currentDate.daysInMonth; i++){
 					var calendarCell = document.createElement("li");
 					var calCellTime = document.createElement("time");
+					calendarList.setAttribute('id', 'dayList');
 					calendarList.appendChild(calendarCell);
 					calendarCell.id = 'day_'+(i+1);
 					var dayDataDate = new Date(theDate.getFullYear(), theDate.getMonth(), (i+1));
@@ -182,8 +197,8 @@ document.addEventListener("DOMContentLoaded", function(event){
 					calCellTime.appendChild(dayOfMonth);
 					calendarCell.appendChild(calCellTime);
 					monthView.appendChild(calendarList);
-
 				} // daysInMonth for loop ends
+
 
 				// let windowSize;
 				//
@@ -246,7 +261,26 @@ document.addEventListener("DOMContentLoaded", function(event){
 						}
 					}
 
+					function today(){
+						for(i = 0; i < currentDate.daysInMonth; i++){
+							var calendarCell = document.createElement("li");
+							var calCellTime = document.createElement("time");
+							calendarList.appendChild(calendarCell);
+							calendarCell.id = 'day_'+(i+1);
+							var dayDataDate = new Date(theDate.getFullYear(), theDate.getMonth(), (i+1));
+							calCellTime.setAttribute('datetime', dayDataDate.toISOString());
+							calCellTime.setAttribute('data-dayofweek', dayNames[dayDataDate.getDay()]);
 
+							calendarCell.className = "calendar-cell";
+							if(i === currentDate.theDay-1){
+								calendarCell.className = "today";
+							}
+							var dayOfMonth = document.createTextNode(i+1);
+							calCellTime.appendChild(dayOfMonth);
+							calendarCell.appendChild(calCellTime);
+							monthView.appendChild(calendarList);
+						} // daysInMonth for loop ends
+					}
 
 
 
@@ -270,6 +304,8 @@ document.addEventListener("DOMContentLoaded", function(event){
 		// console.log(new DateObject(theDate));
 		renderCalendar("calendarThis");
 
+		console.log('test');
+
 		function goToMonth(currentDate, direction) {
 			if (direction == false){
 				theDate = new Date(theDate.getFullYear(), theDate.getMonth()-1, 1);
@@ -278,6 +314,8 @@ document.addEventListener("DOMContentLoaded", function(event){
 			}
 			return renderCalendar("calendarThis");
 		}
+
+		// currentDate.theDay
 
 	}); // DOMContentLoaded event listener ends
 

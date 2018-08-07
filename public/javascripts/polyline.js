@@ -1,6 +1,7 @@
-
+let count = 0;
 // CREATE POLYLINE
 function createPolyline(position){
+  console.log(count);
   count++;
   if(count == 2){
     console.log('drawing line')
@@ -29,6 +30,7 @@ function createPolyline(position){
     addPropertiesPolylines(polyline);
   }
   else{
+    console.log(count);
     console.log('saving position one');
     positionOne = position;
   }

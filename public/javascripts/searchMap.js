@@ -14,7 +14,7 @@
   let searchMarker;
   let addConfirm = false;
   let lineSymbol;
-  let infowindowMarker;
+  // let infowindowMarker;
   let infowindowPolyline;
   let infowindowSearch;
   let pinpointIcon;
@@ -23,7 +23,6 @@
 
   // i is the position of the marker in the array
   let i;
-  let count = 0;
   let positionOne;
   let map;
 
@@ -38,7 +37,9 @@
     });
 
     map.addListener('click', function hideAllInfowindows(){
-      infowindowMarker.setMap(null);
+      for (let i = 0; i < infowindowArr.length; i++) {
+        infowindowArr[i].setMap(null);
+      }
       infowindowPolyline.setMap(null);
       infowindowSearch.setMap(null);
     });
@@ -101,7 +102,19 @@
 
         markers.push(searchMarker);
 
-        let infoSearch = '<i class="infoSearchIcon btn-small material-icons" onclick="addToMap()">add</i><h6 class="infoSearch">save to map</h6>'
+        const placeName = searchMarker.getTitle();
+
+        let infoSearch =
+        `
+        <div class="center">
+          <legend class="searchLocation">${placeName}</legend>
+          <a onclick="addToMap('${placeName}')" class="waves-effect waves-light btn-small addBtn"><i class="material-icons left">add</i>Add to map</a>
+        </div>
+        `;
+
+
+
+        // '<i class="infoSearchIcon btn-small material-icons" onclick="addToMap()">add</i><h6 class="infoSearch">save to map</h6>'
 
         infowindowSearch = new google.maps.InfoWindow({
           content: infoSearch
@@ -144,7 +157,7 @@
     drawingManager.setOptions({
       drawingControlOptions: {
         map: map,
-        position: google.maps.ControlPosition.RIGHT_CENTER,
+        position: google.maps.ControlPosition.LEFT_TOP,
         drawingModes: ['marker']
       },
       markerOptions:{
@@ -171,33 +184,27 @@
             path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
     };
 
-    // CREATE marker infowindow
-    let infoMarker = '<button onclick="deleteMarker()" type="button" name="button"><i class="material-icons">delete</i></button>';
-
-    infowindowMarker = new google.maps.InfoWindow({
-      content: infoMarker
-    });
-
     let infoPolyline = '<button onclick="deletePolyline()" type="button" name="button"><i class="material-icons">delete</i></button>';
 
     infowindowPolyline = new google.maps.InfoWindow({
-      content: infoPolyline
-    })
+      content: infoPolyline,
+    });
 
     loadMarkers();
     loadPolylines();
 
   }
 
-
   // ADD searchmarker to array and map
-  function addToMap(){
+  function addToMap(placeName){
 
     drawingMarker = new google.maps.Marker({
       map: map,
       position: searchMarker.getPosition(),
       icon: pinpointIcon
     });
+
+    console.log(placeName);
 
     console.log('addConfirm = true')
     addConfirm = true;
@@ -206,5 +213,10 @@
     searchMarker.setMap(null);
 
     infowindowSearch.setMap(null);
-    infowindowMarker.open(map, drawingMarker);
+
+    // const infowindowMarker = createInfowindowMarker(placeName);
+
+    // createInfowindowMarker(placeName).open(map, drawingMarker)
+
+    // infowindowMarker.open(map, drawingMarker);
   }

@@ -14,3 +14,42 @@
 .saveBtn:focus{
   background-color: #F4C300;
 }
+
+.fixed-action-btn{
+  position: absolute;
+  left: 10px;
+  bottom: 30px;
+}
+
+.searchLocation{
+  font-size: 2em;
+  margin: 10px;
+}
+.addBtn{
+  padding: 0 10px;
+  margin: 10px;
+}
+
+.infoBtn{
+  background-color: #aadaff;
+}
+
+.infoBtn:hover{
+  background-color: #aaffff;
+}
+
+.input-field{
+  width: 500px;
+}
+
+.infowindowBtn{
+  display: flex;
+}
+
+.infoForm{
+  margin: 0;
+}
+
+.deleteMarker{
+  margin-right: 5px;
+}

@@ -21,6 +21,29 @@ hr{
   -webkit-box-sizing: content-box;
 }
 
+.headerDaySection{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.headerDaySection .col {
+  padding: 13px 13px;
+}
+
+.imagenToday{
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  position: relative;
+  top: 3px;
+  padding: 0;
+}
+
+#activityLog li{
+  width: auto !important;
+}
+
 /* .container{
     text-align: left;
     width: 57%;

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const Marker = require('../models/markers');
 const User = require('../models/user');
+const Infowindow = require('../models/infowindows');
 
 const router = express.Router();
 
@@ -46,6 +47,29 @@ router.post('/', (req, res) => {
     })
   }
 });
+
+// SAVE infowindow
+router.post('/saveInfowindow', (req, res) => {
+  if(req.session.userId == undefined){
+    console.log('Log in to save your infowindows');
+  }else{
+    const infowindow = req.body;
+
+    const newInfowindow = new Infowindow({
+      location: infowindow.location,
+      info: infowindow.info,
+      id: req.session.userId
+    });
+
+    newInfowindow.save((err) => {
+      if(err) console.log(err);
+    });
+
+    console.log(newInfowindow);
+    console.log('infowindow saved');
+
+  }
+})
 
 
 // LOAD markers from database with specific id
