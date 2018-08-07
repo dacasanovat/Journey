@@ -40,10 +40,6 @@ hr{
   padding: 0;
 }
 
-#activityLog li{
-  width: auto !important;
-}
-
 /* .container{
     text-align: left;
     width: 57%;
@@ -148,6 +144,19 @@ hr{
     cursor: pointer;
 }
 
+#activityLog{
+  border: none;
+  max-height: 360px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+#activityLog li{
+  width: auto !important;
+  display: flex;
+  border-radius: 20px;
+}
+
 /* FOR MOBILE SCREEN */
 @media (max-width: 767px) {
   #calendarThis li, .day-of-week{
@@ -158,6 +167,16 @@ hr{
   }
   #calendarThis{
       width: 358px;
+  }
+  #activityLog{
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+  #activityLog{
+    max-height: 150px;
+    overflow: hidden;
+    overflow-y: scroll;
   }
 }
 
@@ -172,10 +191,11 @@ hr{
   .month-view ul{
       margin: 0 0 0 2px;
   }
-  /* #calendarThis{
-      width: 358px;
-      height: 95%;
-  } */
+  #activityLog{
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
 }
 
 /* FOR LARGE SCREEN */

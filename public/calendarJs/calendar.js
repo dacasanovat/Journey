@@ -7,11 +7,14 @@
 var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-document.addEventListener("DOMContentLoaded", function(event){
+let DateObject;
+let theDate;
 
-		let theDate = new Date();
+// document.addEventListener("DOMContentLoaded", function(event){
 
-		let DateObject = function DateObject(theDate) {
+		theDate = new Date();
+
+		DateObject = function DateObject(theDate) {
 				this.theDay = theDate.getDate();
 				this.dayName = dayNames[theDate.getDay()];
 				this.theMonth = monthNames[theDate.getMonth()];
@@ -72,51 +75,6 @@ document.addEventListener("DOMContentLoaded", function(event){
 
 				// ADDING html to <div id='dayView'>
 				$('#dayView').html(formString);
-
-				// when everything on the page finished loading
-				$(function() {
-					// all code here
-
-					$('body').on('click', '#goToday', function(e) {
-						e.preventDefault();
-						theDate = new Date();
-						theDate.setMonth(theDate.getMonth() - 1);
-						currentDate = new DateObject(theDate);
-						goToMonth(currentDate, true);
-					});
-
-					$('body').on('click', '#dayList > li', function(e) {
-						e.preventDefault();
-						const listTag = document.getElementById('dayList').getElementsByTagName('li');
-
-						console.log('Click one of those list items ');
-						for (let i = 0; i < listTag.length; i++) {
-							listTag[i].classList.remove('today');
-						}
-						e.target.classList.add('today');
-					});
-
-	        $( "#activityLog" ).sortable();
-	        $( "#activityLog" ).disableSelection();
-	      });
-
-	      const activityList = [];
-
-	      $('body').on('submit', '#activityForm', function(e){
-	        e.preventDefault();
-	        const activity = $('#activityInput').val();
-	        activityList.push(activity);
-	        displayAct();
-	        $('#activityInput').val('');
-	      });
-
-	      function displayAct(){
-	        let str = '';
-	        activityList.forEach((act) => {
-	          str += `<li class="collection-item">${act}</li>`;
-	        })
-	        $('#activityLog').html(str);
-	      }
 
 
 
@@ -306,17 +264,69 @@ document.addEventListener("DOMContentLoaded", function(event){
 
 		console.log('test');
 
-		function goToMonth(currentDate, direction) {
-			if (direction == false){
-				theDate = new Date(theDate.getFullYear(), theDate.getMonth()-1, 1);
-			} else{
-				theDate = new Date(theDate.getFullYear(), theDate.getMonth()+1, 1);
-			}
-			return renderCalendar("calendarThis");
-		}
+
 
 		// currentDate.theDay
 
-	}); // DOMContentLoaded event listener ends
+//	}); // DOMContentLoaded event listener ends
+
+	function goToMonth(currentDate, direction) {
+		if (direction == false){
+			theDate = new Date(theDate.getFullYear(), theDate.getMonth()-1, 1);
+		} else{
+			theDate = new Date(theDate.getFullYear(), theDate.getMonth()+1, 1);
+		}
+		return renderCalendar("calendarThis");
+	}
+
+	// when everything on the page finished loading it executes this function.
+	$(function() {
+		// all code here
+
+		const activityList = [];
+
+		$('body').on('submit', '#activityForm', function(e){
+			e.preventDefault();
+			const activity = $('#activityInput').val();
+			if($('#activityInput').val() == ''){
+				console.log('You need to write something')
+			} else {
+				activityList.push(activity);
+				displayAct();
+				$('#activityInput').val('');
+			}
+		});
+
+		function displayAct(){
+			let str = '';
+			activityList.forEach((act) => {
+				str += `<li class="collection-item">${act}</li>`;
+			})
+			$('#activityLog').html(str);
+		}
+
+		console.log('adding got today click thing');
+		$('body').on('click', '#goToday', function(e) {
+			e.preventDefault();
+			let theDate = new Date();
+			theDate.setMonth(theDate.getMonth() - 1);
+			let currentDate = new DateObject(theDate);
+			goToMonth(currentDate, true);
+		});
+
+		$('body').on('click', '#dayList > li', function(e) {
+			e.preventDefault();
+			const listTag = document.getElementById('dayList').getElementsByTagName('li');
+
+			console.log('Click one of those list items ');
+			for (let i = 0; i < listTag.length; i++) {
+				listTag[i].classList.remove('today');
+			}
+			e.target.classList.add('today');
+		});
+		// ADD sortable
+		$( "#activityLog" ).sortable();
+		$( "#activityLog" ).disableSelection();
+	});
 
 })(); // iife (immediately invoked function expressions) ends
