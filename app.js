@@ -9,6 +9,7 @@ const indexRouter = require('./routes/index');
 const markerRouter = require('./routes/marker');
 const polylineRouter = require('./routes/polyline');
 const usersRouter = require('./routes/users');
+const calendarRouter = require('./routes/calendar.js');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/', indexRouter);
 app.use('/map', markerRouter);
 app.use('/polyline', polylineRouter);
 app.use('/users', usersRouter);
+app.use('/calendar', calendarRouter);
 
 
 // catch 404 and forward to error handler

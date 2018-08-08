@@ -1,3 +1,6 @@
+const activityList = [];
+const dayIdSave = [];
+let x = -1;
 
 /* Vanilla JS Calendar */
 (function vanillaJsCalendar(){
@@ -88,8 +91,8 @@ let theDate;
 				var monthView = document.querySelector('.month-view');
 
 				var prevMonthSpan = document.createElement("SPAN");
-				prevMonthSpan.addEventListener('click', function(){
-
+				prevMonthSpan.addEventListener('click', function(e){
+					saveActArray(e);
 					goToMonth(currentDate, false); // Go To Previous Month
 				});
 				prevMonthSpan.classList.add('arrow', 'float-left', 'prev-arrow');
@@ -97,7 +100,8 @@ let theDate;
 				prevMonthSpan.appendChild(backArrow);
 
 				var nextMonthSpan = document.createElement("SPAN");
-				nextMonthSpan.addEventListener('click', function(){
+				nextMonthSpan.addEventListener('click', function(e){
+					saveActArray(e);
 					goToMonth(currentDate, true); // Go To Next Month
 				});
 				nextMonthSpan.classList.add('arrow', 'float-right', 'next-arrow');
@@ -149,7 +153,7 @@ let theDate;
 
 					calendarCell.className = "calendar-cell";
 					if(i === currentDate.theDay-1){
-						calendarCell.className = "today";
+						calendarCell.classList.add('today');
 					}
 					var dayOfMonth = document.createTextNode(i+1);
 					calCellTime.appendChild(dayOfMonth);
@@ -179,7 +183,7 @@ let theDate;
 						} else if (currentDate.firstDayOfMonth == "Friday"){
 							dayOne.style.marginLeft = "245px";
 						} else if (currentDate.firstDayOfMonth == "Saturday"){
-							dayOne.style.marginLeft = "304px";
+							dayOne.style.marginLeft = "294px";
 						}
 					// } else {
 					} else if(window.innerWidth >= 1396){
@@ -219,42 +223,43 @@ let theDate;
 						}
 					}
 
-					function today(){
-						for(i = 0; i < currentDate.daysInMonth; i++){
-							var calendarCell = document.createElement("li");
-							var calCellTime = document.createElement("time");
-							calendarList.appendChild(calendarCell);
-							calendarCell.id = 'day_'+(i+1);
-							var dayDataDate = new Date(theDate.getFullYear(), theDate.getMonth(), (i+1));
-							calCellTime.setAttribute('datetime', dayDataDate.toISOString());
-							calCellTime.setAttribute('data-dayofweek', dayNames[dayDataDate.getDay()]);
-
-							calendarCell.className = "calendar-cell";
-							if(i === currentDate.theDay-1){
-								calendarCell.className = "today";
-							}
-							var dayOfMonth = document.createTextNode(i+1);
-							calCellTime.appendChild(dayOfMonth);
-							calendarCell.appendChild(calCellTime);
-							monthView.appendChild(calendarList);
-						} // daysInMonth for loop ends
-					}
-
-
+					// function today(){
+					// 	for(i = 0; i < currentDate.daysInMonth; i++){
+					// 		var calendarCell = document.createElement("li");
+					// 		var calCellTime = document.createElement("time");
+					// 		calendarList.appendChild(calendarCell);
+					// 		calendarCell.id = 'day_'+(i+1);
+					// 		var dayDataDate = new Date(theDate.getFullYear(), theDate.getMonth(), (i+1));
+					// 		calCellTime.setAttribute('datetime', dayDataDate.toISOString());
+					// 		calCellTime.setAttribute('data-dayofweek', dayNames[dayDataDate.getDay()]);
+					//
+					// 		calendarCell.className = "calendar-cell";
+					// 		if(i === currentDate.theDay-1){
+					// 			calendarCell.className = "today";
+					// 		}
+					// 		var dayOfMonth = document.createTextNode(i+1);
+					// 		calCellTime.appendChild(dayOfMonth);
+					// 		calendarCell.appendChild(calCellTime);
+					// 		monthView.appendChild(calendarList);
+					// 	} // daysInMonth for loop ends
+					// }
 
 				var dayHeader = document.getElementsByClassName('day-header');
 				var dayNumNode = document.getElementsByClassName('day-number');
-				var updateDay = function(){
+				var updateDay = function updateDay(){
 					var thisCellTime = this.querySelector('time');
 					dayHeader[0].textContent = thisCellTime.getAttribute('data-dayofweek');
-
-					dayNumNode[0].textContent = this.textContent;
-
+					// dayNumNode[0].textContent = this.textContent;
 				}
 
 				var calCells = document.getElementsByClassName('calendar-cell');
+
 				for(i = 0; i < calCells.length; i++){
 					calCells[i].addEventListener('click', updateDay, false);
+					calCells[i].addEventListener('click', function(e) {
+
+						saveActArray(e);
+					});
 				}
 
 				addSortable();
@@ -285,8 +290,6 @@ let theDate;
 	$(function() {
 		// all code here
 
-		const activityList = [];
-
 		$('body').on('submit', '#activityForm', function(e){
 			e.preventDefault();
 			const activity = $('#activityInput').val();
@@ -301,9 +304,9 @@ let theDate;
 
 		function displayAct(){
 			let str = '';
-			activityList.forEach((act) => {
-				str += `<li class="collection-item">${act}</li>`;
-			})
+			for (let i = (activityList.length - 1); i >= 0; i--) {
+				str += `<li class="collection-item">${activityList[i]}</li>`
+			}
 			$('#activityLog').html(str);
 		}
 
@@ -332,6 +335,40 @@ let theDate;
 		console.log('adding sortable');
 		$( "#activityLog" ).sortable();
 		$( "#activityLog" ).disableSelection();
+	}
+
+	const str = 'day_' + theDate.getDate();
+	console.log(str);
+
+	dayIdSave.push(str);
+	console.log(dayIdSave);
+
+	function saveActArray(e){
+		if(e.target.id != ''){
+			x++;
+			dayIdSave.push(e.target.id);
+
+		}
+		console.log(x);
+		console.log(dayIdSave);
+
+		const activityArr = {
+			month: currentDate.theMonth,
+			dayId: dayIdSave[x],
+			act: activityList
+		}
+
+		if(activityList.length > 0){
+			const url = '/calendar/saveActivites'
+			const options = {
+				method: 'POST',
+				credentials: 'include',
+				headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+				body: JSON.stringify(activityArr)
+			}
+			fetch(url, options);
+		}
+
 	}
 
 })(); // iife (immediately invoked function expressions) ends
