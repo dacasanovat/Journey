@@ -12,27 +12,26 @@ router.post('/saveActivites', (req, res) => {
     activities: activityArr.act,
     dayId: activityArr.dayId,
     month: activityArr.month,
+    year: activityArr.year,
     id: req.session.userId
   });
-  return new Promise((resolve, reject) => {
-    activityList.save((error, result) => {
-      if(error) {
-        reject(error)
-      }
-      resolve(result);
-    });
-  });
 
-  Promise.all(activityList).then((results) => {
-    console.log(results);
-    console.log('All activities saved');
-  }, (error) => {
-    console.log(error);
-    console.log('we fucked up');
-  });
+    activityList.save();
 });
 
-
-
+// LOAD activities
+router.get('/load', (req, res, next) => {
+  Activity.find({ id: req.session.userId }).exec()
+    .then((activities) => {
+      if(!activities) {
+        const err = new Error('No activities where found.');
+        err.status = 404;
+        return next(err);
+      }
+      return res.json(activities);
+    }).catch((err) => {
+        return next(err);
+    });
+});
 
 module.exports = router;

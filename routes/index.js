@@ -6,6 +6,7 @@ const router = express.Router();
 router.use((req, res, next) => {
   res.locals.currentUserId = req.session.userId;
   res.locals.currentName = req.session.firstName;
+  res.locals.apiKey = process.env.googleApi;
   next();
 });
 

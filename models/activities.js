@@ -6,6 +6,7 @@ let activitySchema = new Schema({
   activities: [{ type: String }],
   dayId: { type: String },
   month: { type: String },
+  year: { type: String },
   id: { type: String }
 });
 

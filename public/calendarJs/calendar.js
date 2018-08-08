@@ -1,4 +1,4 @@
-const activityList = [];
+let activityList = [];
 const dayIdSave = [];
 let x = -1;
 
@@ -93,6 +93,14 @@ let theDate;
 				var prevMonthSpan = document.createElement("SPAN");
 				prevMonthSpan.addEventListener('click', function(e){
 					saveActArray(e);
+
+					// dayIdSave.splice(x+1, 1);
+
+					const str = 'day_' + '1';
+
+					dayIdSave.push(str);
+					console.log(dayIdSave);
+					activityList = [];
 					goToMonth(currentDate, false); // Go To Previous Month
 				});
 				prevMonthSpan.classList.add('arrow', 'float-left', 'prev-arrow');
@@ -102,6 +110,14 @@ let theDate;
 				var nextMonthSpan = document.createElement("SPAN");
 				nextMonthSpan.addEventListener('click', function(e){
 					saveActArray(e);
+
+					// dayIdSave.splice(x+1, 1);
+
+					const str = 'day_' + '1';
+
+					dayIdSave.push(str);
+					console.log(dayIdSave);
+					activityList = [];
 					goToMonth(currentDate, true); // Go To Next Month
 				});
 				nextMonthSpan.classList.add('arrow', 'float-right', 'next-arrow');
@@ -256,10 +272,6 @@ let theDate;
 
 				for(i = 0; i < calCells.length; i++){
 					calCells[i].addEventListener('click', updateDay, false);
-					calCells[i].addEventListener('click', function(e) {
-
-						saveActArray(e);
-					});
 				}
 
 				addSortable();
@@ -293,7 +305,7 @@ let theDate;
 		$('body').on('submit', '#activityForm', function(e){
 			e.preventDefault();
 			const activity = $('#activityInput').val();
-			if($('#activityInput').val() == ''){
+			if($('#activityInput').val() == '' || !$('#activityInput').val().replace(/\s/g, '').length){
 				console.log('You need to write something')
 			} else {
 				activityList.push(activity);
@@ -315,11 +327,18 @@ let theDate;
 			e.preventDefault();
 			currentDate = new DateObject(theDate);
 			goToMonth(currentDate, undefined);
+			console.log(x);
+			saveActArray(e);
+			addTodaytoArr();
 		});
 
 		$('body').on('click', '#dayList > li', function(e) {
 			e.preventDefault();
 			const listTag = document.getElementById('dayList').getElementsByTagName('li');
+			saveActArray(e);
+			activityList = [];
+
+
 
 			console.log('Click one of those list items ');
 			for (let i = 0; i < listTag.length; i++) {
@@ -337,28 +356,36 @@ let theDate;
 		$( "#activityLog" ).disableSelection();
 	}
 
-	const str = 'day_' + theDate.getDate();
-	console.log(str);
+	function addTodaytoArr(){
+		const str = 'day_' + theDate.getDate();
+		console.log(str);
 
-	dayIdSave.push(str);
-	console.log(dayIdSave);
+		dayIdSave.push(str);
+		console.log(dayIdSave);
+
+	}
+
+	addTodaytoArr();
 
 	function saveActArray(e){
-		if(e.target.id != ''){
-			x++;
-			dayIdSave.push(e.target.id);
 
-		}
+			clearHtml();
+			x++;
+			if(e.target.id != ''){
+				dayIdSave.push(e.target.id);
+			}
+
 		console.log(x);
 		console.log(dayIdSave);
 
-		const activityArr = {
-			month: currentDate.theMonth,
-			dayId: dayIdSave[x],
-			act: activityList
-		}
-
 		if(activityList.length > 0){
+			const activityArr = {
+				month: currentDate.theMonth,
+				dayId: dayIdSave[x],
+				act: activityList,
+				year: currentDate.theYear
+			}
+
 			const url = '/calendar/saveActivites'
 			const options = {
 				method: 'POST',
@@ -369,6 +396,35 @@ let theDate;
 			fetch(url, options);
 		}
 
+	}
+
+	function clearHtml(){
+		const actList = document.getElementById("activityLog");
+
+    while (actList.hasChildNodes()) {
+        actList.removeChild(actList.firstChild);
+    }
+	}
+
+	// LOAD array
+	function loadActivities(){
+		// get user id from session, take it and make a request to the backend get only markers asociated with that user.
+		fetch('/calendar/load', { credentials: 'include' }).then((res) => {
+			return res.json()
+		}).then((act) => {
+			console.log('------activities that loaded-------')
+			console.log(act);
+			console.log('--------------------------------')
+			filterActs(act);
+
+		}).catch((err) => {
+			console.log(err.message);
+		})
+
+	}
+
+	function filterActs(){
+		
 	}
 
 })(); // iife (immediately invoked function expressions) ends
