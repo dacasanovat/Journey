@@ -3,7 +3,6 @@
 (function vanillaJsCalendar(){
 
 "use strict";
-
 var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -90,6 +89,7 @@ let theDate;
 
 				var prevMonthSpan = document.createElement("SPAN");
 				prevMonthSpan.addEventListener('click', function(){
+
 					goToMonth(currentDate, false); // Go To Previous Month
 				});
 				prevMonthSpan.classList.add('arrow', 'float-left', 'prev-arrow');
@@ -257,14 +257,12 @@ let theDate;
 					calCells[i].addEventListener('click', updateDay, false);
 				}
 
+				addSortable();
+
 		} // renderCalener function ends
 
 		// console.log(new DateObject(theDate));
 		renderCalendar("calendarThis");
-
-		console.log('test');
-
-
 
 		// currentDate.theDay
 
@@ -273,8 +271,12 @@ let theDate;
 	function goToMonth(currentDate, direction) {
 		if (direction == false){
 			theDate = new Date(theDate.getFullYear(), theDate.getMonth()-1, 1);
-		} else{
+		}
+		if(direction == true){
 			theDate = new Date(theDate.getFullYear(), theDate.getMonth()+1, 1);
+		}
+		if(direction == undefined){
+			theDate = new Date();
 		}
 		return renderCalendar("calendarThis");
 	}
@@ -308,10 +310,8 @@ let theDate;
 		console.log('adding got today click thing');
 		$('body').on('click', '#goToday', function(e) {
 			e.preventDefault();
-			let theDate = new Date();
-			theDate.setMonth(theDate.getMonth() - 1);
-			let currentDate = new DateObject(theDate);
-			goToMonth(currentDate, true);
+			currentDate = new DateObject(theDate);
+			goToMonth(currentDate, undefined);
 		});
 
 		$('body').on('click', '#dayList > li', function(e) {
@@ -325,8 +325,13 @@ let theDate;
 			e.target.classList.add('today');
 		});
 		// ADD sortable
+		addSortable();
+	});
+
+	function addSortable (){
+		console.log('adding sortable');
 		$( "#activityLog" ).sortable();
 		$( "#activityLog" ).disableSelection();
-	});
+	}
 
 })(); // iife (immediately invoked function expressions) ends
