@@ -38,9 +38,14 @@
     </div>
   </nav>
 
+
+  <!-- style buttons
+  hand: top: 4px left: 120px
+  marker: top: 4px left: 120px -->
+
 {{/if}}
 
-<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+<input id="pac-input" class="controls" type="text" placeholder="Search">
 <div id="map">
 
 </div>
@@ -54,9 +59,46 @@
 <div class="tapTargetGeneral">
   <div class="tap-target yellow darken-1" data-target="menu">
     <div class="tap-target-content">
-      <h5>Tutorial</h5>
-      <p>Use the .. icon in the toolbar underneath the search bar to drop pins on any location</p>
-      <p>Use the .. icon to draw a path in-between each location by double clicking one location (saving first coordinates) and after double clicking the second location (drawing path).</p>
+      <div class="">
+        <h5>READ ME</h5>
+      </div>
+      <div class="">
+        <p>Use the hand icon in the toolbar underneath the search bar to drop pins on any location</p>
+        <p>Use the pin icon to draw a path in-between each location by clicking the first location and after clicking the second location.</p>
+        <p>Delete lines by clicking on them.</p>
+        <p>DON'T exit without saving.</p>
+      </div>
     </div>
   </div>
 </div>
+
+
+<script type="text/javascript">
+  $(".gmnoprint").each(function(){
+    // ID the Hand button
+    let newObj = $(this).find("title='Ajouter un repère'");
+    newObj.attr('id', 'btnStop');
+
+    // ID the Marker button
+    newObj = $(this).find("[title='Ajouter un repère']");
+    newObj.attr('id', 'btnMarker');
+
+    // ID the toolbar
+    newObj.parent().parent().attr("id", "btnBar");
+
+  });
+
+  // var unsaved = false;
+  //
+  // $(":input").change(function(){ //trigers change in all input fields including text type
+  //     unsaved = true;
+  // });
+  //
+  // function unloadPage(){
+  //     if(unsaved){
+  //         return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+  //     }
+  // }
+  //
+  // window.onbeforeunload = unloadPage;
+</script>

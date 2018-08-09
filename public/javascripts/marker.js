@@ -1,4 +1,3 @@
-const infowindowArr = [];
 let t;
 let cont = 0;
 
@@ -7,6 +6,8 @@ function addMarkerToArray(marker){
 
   // ADD marker to the array
   markerArr.push(marker);
+
+  $('.saveBtn').removeClass('disabled');
 
   addPropertiesMarkers(marker);
 
@@ -36,7 +37,7 @@ function createInfowindowMarker(){
 
       <div class="row infowindowBtn">
         <div class="delete">
-          <a onclick="deleteMarker()" class="btn-floating btn-medium waves-effect waves-light red deleteMarker"><i class="material-icons">delete</i></a>
+          <a onclick="deleteMarker()" class="btn-floating btn-medium waves-effect waves-light red deleteMarker"><img class="deleteMarkerImg" src="/images/deleteMarker.png" alt="deleteMarker"></a>
         </div>
         <div class="save">
           <a onclick="saveInfowindow()" id="saveInfoBtn${cont}" class="btn-floating btn btn-medium waves-effect waves-light green"><i class="material-icons">check</i></a>
@@ -178,6 +179,9 @@ function saveInfowindow(){
 
 // FETCHING markers positions
 function saveMarkers(){
+  // DISABLE save btn and empty arrays.
+  $('.saveBtn').addClass('disabled');
+
   if(polylineArr.length > 0){
     savePolyline();
   }
@@ -198,4 +202,11 @@ function saveMarkers(){
     }
     fetch(url, options);
   }
+
+  // infowindowArrLong = Arrays.copyOf(infowindowArr, infowindowArr.length);
+  // infowindowPolylineLong = Arrays.copyOf(infowindowPolyline, infowindowPolyline.length);
+
+  markerArr = [];
+  // infowindowArr = [];
+  polylineArr = [];
 }

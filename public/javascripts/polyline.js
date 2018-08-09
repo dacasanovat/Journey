@@ -23,6 +23,9 @@ function createPolyline(position){
     polylineArr.push(polyline);
     console.log(polylineArr);
 
+    $('.saveBtn').removeClass('disabled');
+
+
     // HIDE infowindow
     // polyline.addListener('mouseout', function hideInfoWindowPolyline(){
     //   infowindowPolyline.setMap(null);

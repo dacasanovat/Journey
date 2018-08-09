@@ -52,4 +52,19 @@
 
 .deleteMarker{
   margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.deleteMarkerImg{
+  height: 20px;
+  position: relative;
+  top: 3px;
+  right: 1px;
+
+}
+
+.deletePolyline{
+  margin-bottom: 1.3px;
 }

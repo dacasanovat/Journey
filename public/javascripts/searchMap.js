@@ -8,9 +8,12 @@
 
   let markerArr = [];
   let polylineArr = [];
+  let infowindowArr = [];
   let markers = [];
+
   let markerToDelete;
   let polylineToDelete;
+
   let searchMarker;
   let addConfirm = false;
   let lineSymbol;
@@ -184,11 +187,13 @@
             path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
     };
 
-    let infoPolyline = '<button onclick="deletePolyline()" type="button" name="button"><i class="material-icons">delete</i></button>';
+    let infoPolyline = '<a onclick="deletePolyline()" class="btn-floating btn btn-medium waves-effect waves-light deletePolyline red"><i class="material-icons">delete</i></a>';
 
     infowindowPolyline = new google.maps.InfoWindow({
       content: infoPolyline,
     });
+
+    $('.saveBtn').addClass('disabled');
 
     loadMarkers();
     loadPolylines();
