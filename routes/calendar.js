@@ -20,8 +20,8 @@ router.post('/saveActivites', (req, res) => {
 });
 
 // LOAD activities
-router.get('/load', (req, res, next) => {
-  Activity.find({ id: req.session.userId }).exec()
+router.post('/load', (req, res, next) => {
+  Activity.find({ id: req.session.userId, month: req.body.month, dayId: req.body.day }).exec()
     .then((activities) => {
       if(!activities) {
         const err = new Error('No activities where found.');

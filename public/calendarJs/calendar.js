@@ -314,14 +314,6 @@ let theDate;
 			}
 		});
 
-		function displayAct(){
-			let str = '';
-			for (let i = (activityList.length - 1); i >= 0; i--) {
-				str += `<li class="collection-item">${activityList[i]}</li>`
-			}
-			$('#activityLog').html(str);
-		}
-
 		console.log('adding got today click thing');
 		$('body').on('click', '#goToday', function(e) {
 			e.preventDefault();
@@ -336,6 +328,7 @@ let theDate;
 			e.preventDefault();
 			const listTag = document.getElementById('dayList').getElementsByTagName('li');
 			saveActArray(e);
+			loadActivities();
 			activityList = [];
 
 
@@ -366,6 +359,14 @@ let theDate;
 	}
 
 	addTodaytoArr();
+
+	function displayAct(){
+		let str = '';
+		for (let i = (activityList.length - 1); i >= 0; i--) {
+			str += `<li class="collection-item">${activityList[i]}</li>`
+		}
+		$('#activityLog').html(str);
+	}
 
 	function saveActArray(e){
 
@@ -408,23 +409,31 @@ let theDate;
 
 	// LOAD array
 	function loadActivities(){
+		const currentAct = {
+			month: currentDate.theMonth,
+			day: dayIdSave[x+1]
+		}
+		const options = {
+			method: 'post',
+			credentials: 'include',
+			headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+			body: JSON.stringify(currentAct)
+		}
+		console.log(currentAct);
 		// get user id from session, take it and make a request to the backend get only markers asociated with that user.
-		fetch('/calendar/load', { credentials: 'include' }).then((res) => {
+		fetch('/calendar/load', options).then((res) => {
 			return res.json()
 		}).then((act) => {
 			console.log('------activities that loaded-------')
 			console.log(act);
 			console.log('--------------------------------')
-			filterActs(act);
-
+			activityList = act[0].activities;
+			console.log(activityList);
+			displayAct();
 		}).catch((err) => {
 			console.log(err.message);
 		})
 
-	}
-
-	function filterActs(){
-		
 	}
 
 })(); // iife (immediately invoked function expressions) ends
