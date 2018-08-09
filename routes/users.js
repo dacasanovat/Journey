@@ -8,6 +8,8 @@ router.post('/', (req, res) => {
   const user = new User(req.body);
   user.save((err) => {
     if(err) console.log(err);
+    req.session.userId = user._id;
+    req.session.firstName = user.firstName;
     return res.redirect('/');
   });
 });

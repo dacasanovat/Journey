@@ -31,6 +31,7 @@ router.get('/calendar', (req, res) => {
   res.render('calendar');
 })
 
+// Login
 router.post('/login', (req, res, next) => {
   User.authenticate(req.body.emailL, req.body.passwordL, (err, user) => {
 
@@ -44,9 +45,6 @@ router.post('/login', (req, res, next) => {
     console.log('saved the user id')
     req.session.userId = user._id;
     req.session.firstName = user.firstName;
-    console.log(user.firstName);
-
-    console.log(req.session.userId);
 
     return res.redirect('/');
   });
