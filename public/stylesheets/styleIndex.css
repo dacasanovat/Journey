@@ -39,8 +39,8 @@ html, body {
 }
 
 img{
-  height: 50px;
-  margin-top: 7px;
+  /* height: 50px; */
+  /* margin-top: 7px; */
 }
 
 .navbar{
@@ -209,3 +209,7 @@ text-shadow: 1px 1px black;
 } */
 
 /* </GoogleMapsSearch> */
+
+.navbar{
+  background-color: transparent;
+}

@@ -31,14 +31,14 @@ router.post('/saveActivities', (req, res) => {
 
 // LOAD activities
 router.post('/load', (req, res, next) => {
-  Activity.find({ id: req.session.userId, month: req.body.month, dayId: req.body.day }).exec()
+  Activity.find({ id: req.session.userId, month: req.body.month, dayId: req.body.day })
     .then((activities) => {
       if(!activities) {
         const err = new Error('No activities where found.');
         err.status = 404;
         return next(err);
       }
-      return res.json(activities);
+        return res.json(activities);
     }).catch((err) => {
         return next(err);
     });

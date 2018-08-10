@@ -84,7 +84,7 @@ router.get('/load', (req, res, next) => {
       err.status = 404;
       return next(err);
     }
-
+    
     return res.json(markers);
   });
 });

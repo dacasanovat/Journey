@@ -330,7 +330,7 @@ let theDate;
 			e.preventDefault();
 			const listTag = document.getElementById('dayList').getElementsByTagName('li');
 			console.log(activityList);
-			saveActArray(e)
+			saveActArray(e);
 			loadActivities();
 			activityList = [];
 
@@ -410,7 +410,7 @@ let theDate;
 					headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
 					body: JSON.stringify(activityArr)
 				}
-				fetch(url, options)
+				// fetch(url, options)
 				// .then((data) => {
 				// 	console.log('we are about to load the  data.');
 				// 	return loadActivities();
@@ -458,4 +458,10 @@ let theDate;
 
 	}
 
+
+
 })(); // iife (immediately invoked function expressions) ends
+
+function saveActs(){
+	console.log(activityList);
+}
