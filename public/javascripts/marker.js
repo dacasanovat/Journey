@@ -5,8 +5,9 @@ let iwLocation;
 let infowindowLoadArr = [];
 let iwLat;
 let iwLng;
-let latMark
-let lngMark
+let latMark;
+let lngMark;
+let empty = true;
 // let idMarkerDB;
 
 // ADD marker to array
@@ -58,6 +59,11 @@ function addMarkerToArray(marker){
 
 function createInfowindowMarker(iwCompared){
 
+  if(empty == true) {
+    iwCompared.location = "";
+    iwCompared.info = "";
+}
+
   const infoMarker =
     `
     <form class="row infoForm">
@@ -106,7 +112,14 @@ function addPropertiesMarkers(marker){
       }
     });
   }
-  
+
+  if(iwCompared == undefined) {
+    iwCompared = {
+      location: "",
+      info: ""
+    }
+  }
+
   const infowindowMarker = createInfowindowMarker(iwCompared);
 
 
@@ -196,6 +209,9 @@ function loadMarkers(){
       console.log('------markers that loaded-------')
       console.log(markers);
       console.log('--------------------------------')
+      if(markers.length > 0){
+        empty = false;
+      }
       addMarkers(markers);
 
     }).catch((err) => {
