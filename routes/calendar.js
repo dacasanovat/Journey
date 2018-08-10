@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 
-router.post('/saveActivites', (req, res) => {
+router.post('/saveActivities', (req, res) => {
   console.log('---------Activities----------')
 
   const activityArr = req.body;
@@ -16,7 +16,17 @@ router.post('/saveActivites', (req, res) => {
     id: req.session.userId
   });
 
-    activityList.save();
+  Activity.findOneAndUpdate({id: req.session.userId, month: activityArr.month , dayId: activityArr.dayId }, {$set:{activities: activityArr.act}})
+    .then((act) => {
+      if(!act){
+        console.log('not found and creating activity');
+        activityList.save();
+        console.log(activityList);
+      } else {
+        console.log('found and updated');
+        console.log(act);
+      }
+    });
 });
 
 // LOAD activities

@@ -34,8 +34,8 @@ router.post('/', (req, res) => {
             reject(error)
           }
           resolve(result);
-        })
-      })
+        });
+      });
     });
 
     Promise.all(markerArrStrNew).then((results) => {
@@ -58,6 +58,8 @@ router.post('/saveInfowindow', (req, res) => {
     const newInfowindow = new Infowindow({
       location: infowindow.location,
       info: infowindow.info,
+      lat: infowindow.lat,
+      lng: infowindow.lng,
       id: req.session.userId
     });
 
@@ -87,43 +89,18 @@ router.get('/load', (req, res, next) => {
   });
 });
 
-// function saveToDatabase(marker){
-//   const markerWithPosition = new Marker({
-//     latitude: marker.getPosition().lat(),
-//     longitude: marker.getPosition().lng(),
-//     email: User.email
-//   });
-//
-//   console.log(markerWithPosition);
-//
-//   markerWithPosition.save((err) => {
-//       if (err) console.log(err);
-//       return res.redirect('/users');
-//     });
-//
-// }
+router.get('/loadInfowindow', (req, res) => {
+  Infowindow.find({ id: req.session.userId }).exec((err, infowindow) => {
+    if(err){
+      return next(err);
+    } else if(!infowindow) {
+      const err = new Error('No infowindows where found.');
+      err.status = 404;
+      return next(err);
+    }
 
-// BACKEND
-// router.post("/marker/save", (req, res) => {
-//   req.query.lat // = 55
-//   req.query.long // = 3156
-//   const Marker = new Marker({longitude: req.query.long, latitude: req.query.lat, email: req.session.email});
-//
-//   Marker.save()
-// })
-
-// BACKEND
-// router.post('/map', (req, res) => {
-//   console.log(req.query.lat); // = 55
-//   console.log(req.query.long); // = 3156
-//   console.log(req.session.email);
-//   const marker = new Marker({
-//     longitude: req.query.long,
-//     latitude: req.query.lat,
-//     email: req.session.email
-//   });
-//
-//   marker.save()
-// })
+    return res.json(infowindow);
+  });
+});
 
 module.exports = router;

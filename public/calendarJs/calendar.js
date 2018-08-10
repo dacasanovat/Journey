@@ -124,17 +124,17 @@ let theDate;
 				var nextArrow = document.createTextNode(">");
 				nextMonthSpan.appendChild(nextArrow);
 
-				document.onkeydown = function() {
-					switch (window.event.keyCode) {
-						case 37: //Left key
-							goToMonth(currentDate, false);
-							break;
-						case 39: //Right key
-							goToMonth(currentDate, true);
-							break;
-					}
-
-				};
+				// document.onkeydown = function() {
+				// 	switch (window.event.keyCode) {
+				// 		case 37: //Left key
+				// 			goToMonth(currentDate, false);
+				// 			break;
+				// 		case 39: //Right key
+				// 			goToMonth(currentDate, true);
+				// 			break;
+				// 	}
+				//
+				// };
 
 				var monthSpan = document.createElement("SPAN");
 				monthSpan.className = "month-header";
@@ -322,12 +322,15 @@ let theDate;
 			console.log(x);
 			saveActArray(e);
 			addTodaytoArr();
+			loadActivities();
+
 		});
 
 		$('body').on('click', '#dayList > li', function(e) {
 			e.preventDefault();
 			const listTag = document.getElementById('dayList').getElementsByTagName('li');
-			saveActArray(e);
+			console.log(activityList);
+			saveActArray(e)
 			loadActivities();
 			activityList = [];
 
@@ -345,7 +348,9 @@ let theDate;
 
 	function addSortable (){
 		console.log('adding sortable');
-		$( "#activityLog" ).sortable();
+		$( "#activityLog" ).sortable({
+  		sort: function( event, ui ) {}
+		});
 		$( "#activityLog" ).disableSelection();
 	}
 
@@ -368,7 +373,18 @@ let theDate;
 		$('#activityLog').html(str);
 	}
 
+	$( "#activityLog" ).on( "sort", function( event, ui ) {
+		const actList = document.getElementById('activityLog').getElementsByTagName('li');
+		console.log(activityList);
+		for (let i = 0; i < actList.length; i++) {
+			activityList[i] = actList[i].innerHTML;
+		}
+		console.log(activityList);
+	});
+
+
 	function saveActArray(e){
+		// return new Promise((resolve, reject) => {
 
 			clearHtml();
 			x++;
@@ -376,27 +392,33 @@ let theDate;
 				dayIdSave.push(e.target.id);
 			}
 
-		console.log(x);
-		console.log(dayIdSave);
+			console.log(x);
+			console.log(dayIdSave);
 
-		if(activityList.length > 0){
-			const activityArr = {
-				month: currentDate.theMonth,
-				dayId: dayIdSave[x],
-				act: activityList,
-				year: currentDate.theYear
+			if(activityList.length > 0){
+				const activityArr = {
+					month: currentDate.theMonth,
+					dayId: dayIdSave[x],
+					act: activityList,
+					year: currentDate.theYear
+				}
+
+				const url = '/calendar/saveActivities'
+				const options = {
+					method: 'POST',
+					credentials: 'include',
+					headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+					body: JSON.stringify(activityArr)
+				}
+				fetch(url, options)
+				// .then((data) => {
+				// 	console.log('we are about to load the  data.');
+				// 	return loadActivities();
+				// }).catch((err) => {
+				// 	return console.log(err.message);
+				// })
 			}
-
-			const url = '/calendar/saveActivites'
-			const options = {
-				method: 'POST',
-				credentials: 'include',
-				headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-				body: JSON.stringify(activityArr)
-			}
-			fetch(url, options);
-		}
-
+		// });
 	}
 
 	function clearHtml(){
