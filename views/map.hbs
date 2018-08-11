@@ -1,10 +1,10 @@
 {{#if currentUserId}}
 
-  <nav class="navbar">
-    <div class="nav-wrapper real-navbar">
+  <nav class="navbar z-depth-3">
+    <div class="nav-wrapper mapCalendar-navbar">
 
       <div class="logoSection">
-        <a href="/"><img src="https://png.icons8.com/office/80/000000/globe.png"></a>
+        <a href="/"><img class="logo" src="images/journeyLogoWhite.png"></a>
       </div>
 
       <ul>
@@ -57,16 +57,22 @@
 
 <!-- Tap Target Structure -->
 <div class="tapTargetGeneral">
-  <div class="tap-target yellow darken-1" data-target="menu">
+  <div class="tap-target" style="background-color: #d36d2b" data-target="menu">
     <div class="tap-target-content">
-      <div class="">
-        <h5>READ ME</h5>
+      <div class="discoveryTitle">
+        <h5 style="font-size: 2.5em">READ ME</h5>
       </div>
-      <div class="">
-        <p>Use the hand icon in the toolbar underneath the search bar to drop pins on any location</p>
-        <p>Use the pin icon to draw a path in-between each location by clicking the first location and after clicking the second location.</p>
-        <p>Delete lines by clicking on them.</p>
-        <p>DON'T exit without saving.</p>
+      <div class="discoveryContent">
+        <p><u>Underneath the Search bar:</u></p>
+        <p><img src="images/googleMaps_pin.png" width="24px" alt="pin"> drop pins on any location</p>
+        <p class="longP"><img src="images/googleMaps_hand.png" width="24px" alt="hand"> draw a path in-between each location by clicking the first location and after clicking the second location.</p>
+        <div style="display:flex">
+          <p>Delete lines by clicking on them</p><a class="btn-floating btn btn-small red" style="margin-left: 10px"><i class="material-icons">delete</i></a>
+        </div>
+        <div style="display: flex">
+          <p>DON'T exit without saving.</p><button class="discoverySave btn-small">Save</button>
+        </div>
+
       </div>
     </div>
   </div>

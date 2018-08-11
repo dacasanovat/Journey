@@ -4,15 +4,16 @@
 
 .saveBtn{
   margin: 0 15px;
-  background-color: #F4C300;
+  background-color: #f5f6f3;
+  color: #3a3a3a;
 }
 
 .saveBtn:hover{
-  background-color: #ffcc00;
+  background-color: #f5f6f3;
 }
 
 .saveBtn:focus{
-  background-color: #F4C300;
+  background-color: #f5f6f3;
 }
 
 .fixed-action-btn{
@@ -21,10 +22,33 @@
   bottom: 30px;
 }
 
+.tap-target-content {
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.discoveryContent p {
+  margin: 10px 0;
+}
+
+.discoverySave {
+  margin-left: 10px;
+  background-color: #f5f6f3;
+  color: #3a3a3a;
+}
+
+.discoverySave:hover, .discoverySave:focus{
+  background-color: #f5f6f3;
+}
+
+.longP {
+  width: 300px;
+}
+
 .searchLocation{
   font-size: 2em;
   margin: 10px;
 }
+
 .addBtn{
   padding: 0 10px;
   margin: 10px;
@@ -60,7 +84,7 @@
 .deleteMarkerImg{
   height: 20px;
   position: relative;
-  top: 3px;
+  top: 10px;
   right: 1px;
 
 }

@@ -21,6 +21,9 @@
     <!-- Materialize icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Pacifico" rel="stylesheet">
+
     <!-- search map -->
     <script type="text/javascript" src="/javascripts/searchMap.js"></script>
     <script type="text/javascript" src="/javascripts/marker.js"></script>
@@ -34,20 +37,90 @@
   <!-- initialize the map -->
   <body onload="initAutocomplete()">
 
-    <!-- <div class="">
 
-    </div> -->
+<!-- LOGIN MODAL CONTENT -->
+    <div id="login" class="modal">
+      <div class="modal-content">
+        <div class="header">
+          <h4 style="color: #3a3a3a">Log In</h4>
+        </div>
+        <hr>
+        <div class="row loginContent">
+          <form action="/login" method="post" class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <input name="emailL" id="emailL" type="email" class="validate">
+                <label for="emailL">Email</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input name="passwordL" id="passwordL" type="password" class="validate">
+                <label for="passwordL">Password</label>
+              </div>
+            </div>
+            <div class="footer">
+              <button type="submit" class="modal-close waves-effect waves-green btn submitLogin">Log In</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIGNUP MODAL CONTENT -->
+    <div id="signup" class="modal">
+      <div class="modal-content">
+        <div class="header">
+          <h4 style="color: #3a3a3a">Sign Up</h4>
+        </div>
+        <hr>
+        <div class="row loginContent">
+          <form action="/users" method="post" class="col s12">
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="first_name" name="firstName" type="text" class="validate" minLength="3">
+                <label for="first_name">First Name</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="last_name" name="lastName" type="text" class="validate" minLength="3">
+                <label for="last_name">Last Name</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input required id="email" name="email" type="email" class="validate" minLength="3">
+                <label for="email">Email</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input required id="password" name="password" type="password" class="validate" minLength="3">
+                <label for="password">Password</label>
+              </div>
+            </div>
+            <div class="footer">
+              <button class="modal-close waves-effect waves-green btn submitLogin" type="submit">Sign Up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
     {{#if currentUserId}}
 
 
     {{else}}
 
+
+
+
     <!-- Navbar -->
     <nav class="navbar z-depth-0">
-      <div class="nav-wrapper real-navbar">
+      <div class="nav-wrapper index-navbar">
 
         <div class="logoSection">
-          <a href="/"><img src="images/journeyLogoGrey.png"></a>
+          <a href="/"><img class="logo" src="images/journeyLogoWhite.png"></a>
           <!-- <img src="https://png.icons8.com/office/80/000000/globe.png"> -->
         </div>
 
@@ -55,75 +128,12 @@
           <ul>
               <!-- Modal LOG IN-->
               <li>
-                <a class="waves-effect waves-light btn modal-trigger logInBtn" href="#login">log in</a>
-                <div id="login" class="modal">
-                  <div class="modal-content">
-                    <h4>Log In</h4>
-                    <div class="row">
-                      <form action="/login" method="post" class="col s12">
-                        <div class="row">
-                          <div class="input-field col s12">
-                            <input name="emailL" id="emailL" type="email" class="validate">
-                            <label for="emailL">Email</label>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="input-field col s12">
-                            <input name="passwordL" id="passwordL" type="password" class="validate">
-                            <label for="passwordL">Password</label>
-                          </div>
-                        </div>
-                        <button type="submit" class="modal-close waves-effect waves-green btn-flat">Log In</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
+                <a class="waves-effect waves-light btn modal-trigger logInBtn" href="#login">Log in</a>
               </li>
-
               <!-- Modal SINGUP -->
               <li>
                 <a class="waves-effect waves-light btn modal-trigger signUpBtn" href="#signup">Sign up</a>
-                <div id="signup" class="modal">
-                  <div class="modal-content">
-                    <h4>Sign Up</h4>
-                    <div class="row">
-                      <form action="/users" method="post" class="col s12">
-                        <div class="row">
-                          <div class="input-field col s6">
-                            <input id="first_name" name="firstName" type="text" class="validate">
-                            <label for="first_name">First Name</label>
-                          </div>
-                          <div class="input-field col s6">
-                            <input id="last_name" name="lastName" type="text" class="validate">
-                            <label for="last_name">Last Name</label>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="input-field col s12">
-                            <input id="email" name="email" type="email" class="validate">
-                            <label for="email">Email</label>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="input-field col s12">
-                            <input id="password" name="password" type="password" class="validate">
-                            <label for="password">Password</label>
-                          </div>
-                        </div>
-                        <button class="modal-close waves-effect waves-green btn-flat" type="submit">Sign Up</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
               </li>
-              <!-- <li>
-                  <ul id="dropdown2" class="dropdown-content">
-                      <li><a href="/map">Map</a></li>
-                      <li><a href="/calendar">Calendar</a></li>
-                  </ul>
-                    <a class="btn dropdown-trigger" href="#!" data-target="dropdown2"><i class="material-icons dropdownIcon">view_module</i></a>
-              </li> -->
           </ul>
         {{/if}}
       </div>
@@ -173,6 +183,72 @@
 
       instance.open();
       }
+
+      // Typewriter functionality
+      //   var TxtType = function(el, toRotate, period) {
+      //     this.toRotate = toRotate;
+      //     this.el = el;
+      //     this.loopNum = 0;
+      //     this.period = 500;
+      //     this.txt = '';
+      //     this.tick();
+      //     this.isDeleting = false;
+      // };
+      //
+      // TxtType.prototype.tick = function() {
+      //     var i = this.loopNum % this.toRotate.length;
+      //     var fullTxt = this.toRotate[i];
+      //
+      //     if (this.isDeleting) {
+      //     this.txt = fullTxt.substring(0, this.txt.length - 1);
+      //     } else {
+      //     this.txt = fullTxt.substring(0, this.txt.length + 1);
+      //     }
+      //
+      //     this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+      //
+      //     var that = this;
+      //     var delta = 150 - Math.random() * 100;
+      //
+      //     if (this.isDeleting) { delta /= 2; }
+      //
+      //     if (!this.isDeleting && this.txt === fullTxt && this.loopNum < 2) {
+      //     delta = this.period;
+      //     this.isDeleting = true;
+      //     } else if (this.isDeleting && this.txt === '') {
+      //     this.isDeleting = false;
+      //     this.loopNum++;
+      //     delta = 500;
+      //     }
+      //     if(this.loopNum == 2){
+      //       var css = document.createElement("style");
+      //       css.type = "text/css";
+      //       css.innerHTML = ".typewrite > .wrap { font-family: Pacifico !important }";
+      //       document.body.appendChild(css);
+      //     }
+      //
+      //
+      //       setTimeout(function() {
+      //           that.tick();
+      //       }, delta);
+      //
+      // };
+      //
+      // window.onload = function() {
+      //     var elements = document.getElementsByClassName('typewrite');
+      //     for (var i=0; i<elements.length; i++) {
+      //         var toRotate = elements[i].getAttribute('data-type');
+      //         var period = elements[i].getAttribute('data-period');
+      //         if (toRotate) {
+      //           new TxtType(elements[i], JSON.parse(toRotate), period);
+      //         }
+      //     }
+      //     // INJECT CSS
+      //     var css = document.createElement("style");
+      //     css.type = "text/css";
+      //     css.innerHTML = ".typewrite > .wrap { color: #DDD; font-family: Roboto, sans-serif;  text-shadow: 1px 1px black;}";
+      //     document.body.appendChild(css);
+      // };
 
     </script>
 

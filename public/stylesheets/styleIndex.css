@@ -26,26 +26,26 @@ html, body {
   margin: auto;
   background-color: transparent;
   border: 1px solid;
-  border-color: #F4C300;
+  border-color: #d36d2b;
   display: inline-block;
 }
 
 .StartBtn:hover{
-  background-color: #F4C300;
+  background-color: #d36d2b;
 }
 
 .StartBtn:focus{
-  background-color: #F4C300;
+  background-color: #d36d2b;
 }
 
-img{
-  /* height: 50px; */
-  /* margin-top: 7px; */
+.logo{
+  width: 150px;
+  position: absolute;
+  top: -40px;
 }
 
 .navbar{
   height: 8.5%;
-  /* background-color: transparent; */
 }
 
 .logoSection .logo{
@@ -56,7 +56,7 @@ img{
   margin-left: 10px;
 }
 
-.real-navbar{
+.index-navbar{
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -64,10 +64,28 @@ img{
   background-color: transparent;
 }
 
+.mapCalendar-navbar{
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #A49694;
+}
+
 .dropdownIcon{
   height: 30px;
   width: 30px;
 }
+
+
+/* #emailL, #passwordL {
+  border-bottom: 1px solid #9e9e9e;
+}
+
+#emailL:focus, #passwordL:focus{
+  border-bottom-color: #ffcc00;
+
+} */
+
 
 .logoutBtn{
   background-color: #A49694;
@@ -81,21 +99,20 @@ img{
   background-color: #A49694;
 }
 
-.signUpBtn{
-  margin-right: 10px;
-  background-color: #F4C300;
+.signUpBtn, .dropdown-trigger{
+  background-color: #d36d2b;
 }
 
-.signUpBtn:hover{
-  background-color: #ffcc00;
+.signUpBtn:hover, .submitLogin:hover, .dropdown-trigger:hover{
+  background-color: #e07b39;
 }
 
-.signUpBtn:focus{
-  background-color: #F4C300;
+.signUpBtn:focus, .dropdown-trigger:focus{
+  background-color: #d36d2b;
 }
 
 #signup{
-  background-color: #F4C300;
+  background-color: #cbc8c7;
 }
 
 .logInBtn{
@@ -110,9 +127,29 @@ img{
   background-color: #A49694;
 }
 
+.header{
+  display: flex;
+  justify-content: center
+}
+
+.loginContent{
+  margin-top: 20px;
+}
+
 #login{
-  background-color: #F4C300;
+  background-color: #cbc8c7;
   width: 40%;
+}
+
+.submitLogin{
+  width: 60%;
+  border-radius: 20px;
+  background-color: #d36d2b;
+}
+
+.footer{
+  display: flex;
+  justify-content: center;
 }
 
 h1{
