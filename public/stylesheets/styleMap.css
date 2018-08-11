@@ -44,6 +44,10 @@
   width: 300px;
 }
 
+.dropdown-content li>a {
+  color: #3a3a3a;
+}
+
 .searchLocation{
   font-size: 2em;
   margin: 10px;
